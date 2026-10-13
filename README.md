@@ -25,7 +25,7 @@ npm run build
 - `src/i18n/index.ts`: teks antarmuka ID/EN.
 - `src/lib/`: logika harga, WhatsApp, proyek, metadata, dan test.
 - `src/config/pricing.json`: sumber tarif, diskon bersyarat, dan nomor WhatsApp Admin 1.
-- `src/config/contact.json`: nomor WhatsApp Admin 2 dan akun Instagram.
+- `src/config/contact.json`: nomor WhatsApp Admin 2, Instagram, email, dan tautan Google Maps.
 - `src/config/room-presets.example.json`: **ukuran ruang contoh sementara** dan persentase tambahan koridor/ruang sisa per lantai.
 - `content/projects.json` dan `content/image-manifest.json`: data 15 proyek dan indeks 61 foto portofolio dari PDF klien.
 - `public/images/portfolio/`: foto proyek asli. `content/portfolio-contact-sheet.jpg` adalah lembar tinjau internal untuk memilih foto sebelum publikasi.
