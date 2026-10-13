@@ -1,0 +1,258 @@
+[
+  {
+    "slug": "mr-leo-apple-orchard",
+    "title": "Mr. Leo “Apple Orchard” Kerobokan",
+    "category": "villa",
+    "year": 2025,
+    "status": "Selesai",
+    "location": "Kerobokan",
+    "landAreaM2": 500,
+    "buildingAreaM2": 500,
+    "descriptionID": "4 kamar tidur + 1 master bedroom, kolam renang dan taman; luas bangunan dinyatakan ±500 m².",
+    "images": [
+      "/images/portfolio/villa/mr-leo-apple-orchard-01.jpg",
+      "/images/portfolio/villa/mr-leo-apple-orchard-02.jpg",
+      "/images/portfolio/villa/mr-leo-apple-orchard-03.jpg",
+      "/images/portfolio/villa/mr-leo-apple-orchard-04.jpg",
+      "/images/portfolio/villa/mr-leo-apple-orchard-05.jpg",
+      "/images/portfolio/villa/mr-leo-apple-orchard-06.jpg"
+    ]
+  },
+  {
+    "slug": "berawa-villa",
+    "title": "Berawa Villa",
+    "category": "villa",
+    "year": 2024,
+    "status": "Selesai",
+    "location": "Berawa",
+    "landAreaM2": 300,
+    "buildingAreaM2": null,
+    "descriptionID": "3 unit villa, masing-masing 2 kamar tidur, living-dining, kitchen dan pool. Luas tiap unit ±145 m².",
+    "images": [
+      "/images/portfolio/villa/berawa-villa-01.jpg",
+      "/images/portfolio/villa/berawa-villa-02.jpg",
+      "/images/portfolio/villa/berawa-villa-03.jpg",
+      "/images/portfolio/villa/berawa-villa-04.jpg",
+      "/images/portfolio/villa/berawa-villa-05.jpg",
+      "/images/portfolio/villa/berawa-villa-06.jpg"
+    ]
+  },
+  {
+    "slug": "padonan-villa",
+    "title": "Padonan Villa",
+    "category": "villa",
+    "year": 2024,
+    "status": "Selesai",
+    "location": "Padonan",
+    "landAreaM2": 100,
+    "buildingAreaM2": 150,
+    "descriptionID": "2 kamar tidur, living room open space dan kolam kecil.",
+    "images": [
+      "/images/portfolio/villa/padonan-villa-01.jpg",
+      "/images/portfolio/villa/padonan-villa-02.jpg",
+      "/images/portfolio/villa/padonan-villa-03.jpg",
+      "/images/portfolio/villa/padonan-villa-04.jpg"
+    ]
+  },
+  {
+    "slug": "kwanji-villa",
+    "title": "Kwanji Villa",
+    "category": "villa",
+    "year": 2023,
+    "status": "Selesai",
+    "location": "Kwanji",
+    "landAreaM2": 140,
+    "buildingAreaM2": 85,
+    "descriptionID": "2 kamar tidur, living room open space dan kolam kecil.",
+    "images": [
+      "/images/portfolio/villa/kwanji-villa-01.jpg",
+      "/images/portfolio/villa/kwanji-villa-02.jpg",
+      "/images/portfolio/villa/kwanji-villa-03.jpg",
+      "/images/portfolio/villa/kwanji-villa-04.jpg"
+    ]
+  },
+  {
+    "slug": "nuansa-balian-house",
+    "title": "Nuansa Balian House",
+    "category": "rumah-tinggal",
+    "year": 2022,
+    "status": "Selesai",
+    "location": null,
+    "landAreaM2": 150,
+    "buildingAreaM2": 300,
+    "descriptionID": "3 lantai, 4 kamar tidur termasuk kamar pembantu, ruang keluarga dan garasi 2 mobil.",
+    "images": [
+      "/images/portfolio/rumah-tinggal/nuansa-balian-house-01.jpg",
+      "/images/portfolio/rumah-tinggal/nuansa-balian-house-02.jpg",
+      "/images/portfolio/rumah-tinggal/nuansa-balian-house-03.jpg",
+      "/images/portfolio/rumah-tinggal/nuansa-balian-house-04.jpg"
+    ]
+  },
+  {
+    "slug": "buluh-indah-apartment",
+    "title": "Buluh Indah Apartment",
+    "category": "apartment",
+    "year": 2025,
+    "status": "Selesai Tahap 1",
+    "location": "Jl. Buluh Indah, Denpasar",
+    "landAreaM2": 400,
+    "buildingAreaM2": null,
+    "descriptionID": "3 unit apartemen dan 1 office; setiap apartemen 3 kamar tidur, living room dan kitchen, luas masing-masing ±140 m².",
+    "images": [
+      "/images/portfolio/apartment/buluh-indah-apartment-01.jpg",
+      "/images/portfolio/apartment/buluh-indah-apartment-02.jpg",
+      "/images/portfolio/apartment/buluh-indah-apartment-03.jpg",
+      "/images/portfolio/apartment/buluh-indah-apartment-04.jpg",
+      "/images/portfolio/apartment/buluh-indah-apartment-05.jpg"
+    ]
+  },
+  {
+    "slug": "tabanan",
+    "title": "Tabanan",
+    "category": "rumah-tinggal",
+    "year": 2025,
+    "status": "On Progress",
+    "location": "Jl. Ks. Tubun, Tabanan",
+    "landAreaM2": 220,
+    "buildingAreaM2": 260,
+    "descriptionID": "Rumah tinggal beserta 6 kamar kos yang direncanakan sebagai kos eksklusif.",
+    "images": [
+      "/images/portfolio/rumah-tinggal/tabanan-01.jpg",
+      "/images/portfolio/rumah-tinggal/tabanan-02.jpg",
+      "/images/portfolio/rumah-tinggal/tabanan-03.jpg"
+    ]
+  },
+  {
+    "slug": "tabanan-house-1",
+    "title": "Tabanan House 1",
+    "category": "rumah-tinggal",
+    "year": 2022,
+    "status": "Selesai",
+    "location": "Tabanan Kota",
+    "landAreaM2": 100,
+    "buildingAreaM2": 80,
+    "descriptionID": "1 master bedroom, 2 kamar tidur lain, dapur dan living room.",
+    "images": [
+      "/images/portfolio/rumah-tinggal/tabanan-house-1-01.jpg",
+      "/images/portfolio/rumah-tinggal/tabanan-house-1-02.jpg",
+      "/images/portfolio/rumah-tinggal/tabanan-house-1-03.jpg",
+      "/images/portfolio/rumah-tinggal/tabanan-house-1-04.jpg"
+    ]
+  },
+  {
+    "slug": "tabanan-house-2",
+    "title": "Tabanan House 2",
+    "category": "rumah-tinggal",
+    "year": 2022,
+    "status": "Selesai",
+    "location": "Tabanan Utara",
+    "landAreaM2": 120,
+    "buildingAreaM2": 100,
+    "descriptionID": "1 master bedroom, 3 kamar tidur lain dan living room.",
+    "images": [
+      "/images/portfolio/rumah-tinggal/tabanan-house-2-01.jpg",
+      "/images/portfolio/rumah-tinggal/tabanan-house-2-02.jpg",
+      "/images/portfolio/rumah-tinggal/tabanan-house-2-03.jpg",
+      "/images/portfolio/rumah-tinggal/tabanan-house-2-04.jpg"
+    ]
+  },
+  {
+    "slug": "batanghari-house",
+    "title": "Batanghari House",
+    "category": "rumah-tinggal",
+    "year": 2026,
+    "status": "On Progress",
+    "location": "Jl. Tukad Batanghari, Panjer",
+    "landAreaM2": 200,
+    "buildingAreaM2": 500,
+    "descriptionID": "1 master bedroom, 3 kamar anak, kamar pembantu, gym dan living room.",
+    "images": [
+      "/images/portfolio/rumah-tinggal/batanghari-house-01.jpg",
+      "/images/portfolio/rumah-tinggal/batanghari-house-02.jpg",
+      "/images/portfolio/rumah-tinggal/batanghari-house-03.jpg",
+      "/images/portfolio/rumah-tinggal/batanghari-house-04.jpg"
+    ]
+  },
+  {
+    "slug": "villa-kamanda",
+    "title": "Villa Kamanda Interior",
+    "category": "interior",
+    "year": 2023,
+    "status": "Selesai",
+    "location": "Ubud, Gianyar",
+    "landAreaM2": null,
+    "buildingAreaM2": null,
+    "descriptionID": "Pekerjaan interior.",
+    "images": [
+      "/images/portfolio/interior/villa-kamanda-01.jpg",
+      "/images/portfolio/interior/villa-kamanda-02.jpg",
+      "/images/portfolio/interior/villa-kamanda-03.jpg"
+    ]
+  },
+  {
+    "slug": "villa-tabayuh",
+    "title": "Villa Tabayuh Interior",
+    "category": "interior",
+    "year": 2023,
+    "status": "Selesai",
+    "location": "Ubud, Gianyar",
+    "landAreaM2": null,
+    "buildingAreaM2": null,
+    "descriptionID": "Pekerjaan interior.",
+    "images": [
+      "/images/portfolio/interior/villa-tabayuh-01.jpg",
+      "/images/portfolio/interior/villa-tabayuh-02.jpg",
+      "/images/portfolio/interior/villa-tabayuh-03.jpg",
+      "/images/portfolio/interior/villa-tabayuh-04.jpg",
+      "/images/portfolio/interior/villa-tabayuh-05.jpg"
+    ]
+  },
+  {
+    "slug": "villa-bozec",
+    "title": "Villa Bozec Interior",
+    "category": "interior",
+    "year": 2024,
+    "status": "Selesai",
+    "location": "Ubud, Gianyar",
+    "landAreaM2": null,
+    "buildingAreaM2": null,
+    "descriptionID": "Pekerjaan interior.",
+    "images": [
+      "/images/portfolio/interior/villa-bozec-01.jpg",
+      "/images/portfolio/interior/villa-bozec-02.jpg",
+      "/images/portfolio/interior/villa-bozec-03.jpg"
+    ]
+  },
+  {
+    "slug": "villa-richard-swanelli",
+    "title": "Villa Richard Swanelli Interior",
+    "category": "interior",
+    "year": 2025,
+    "status": "Selesai",
+    "location": "Ubud, Gianyar",
+    "landAreaM2": null,
+    "buildingAreaM2": null,
+    "descriptionID": "Pekerjaan interior.",
+    "images": [
+      "/images/portfolio/interior/villa-richard-swanelli-01.jpg",
+      "/images/portfolio/interior/villa-richard-swanelli-02.jpg",
+      "/images/portfolio/interior/villa-richard-swanelli-03.jpg"
+    ]
+  },
+  {
+    "slug": "villa-braunsteiner",
+    "title": "Villa Braunsteiner Interior",
+    "category": "interior",
+    "year": 2025,
+    "status": "Selesai",
+    "location": "Ubud, Gianyar",
+    "landAreaM2": null,
+    "buildingAreaM2": null,
+    "descriptionID": "Pekerjaan interior.",
+    "images": [
+      "/images/portfolio/interior/villa-braunsteiner-01.jpg",
+      "/images/portfolio/interior/villa-braunsteiner-02.jpg",
+      "/images/portfolio/interior/villa-braunsteiner-03.jpg"
+    ]
+  }
+]

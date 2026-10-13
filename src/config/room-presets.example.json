@@ -1,0 +1,107 @@
+{
+  "status": "PROVISIONAL - not provided by client, replace after architectural review",
+  "units": "m2",
+  "roomSizes": [
+    {
+      "key": "master_bedroom",
+      "labelID": "Kamar Tidur Utama",
+      "labelEN": "Master Bedroom",
+      "area": 20,
+      "pricingClass": "indoor"
+    },
+    {
+      "key": "bedroom",
+      "labelID": "Kamar Tidur",
+      "labelEN": "Bedroom",
+      "area": 12,
+      "pricingClass": "indoor"
+    },
+    {
+      "key": "bathroom",
+      "labelID": "Kamar Mandi",
+      "labelEN": "Bathroom",
+      "area": 5,
+      "pricingClass": "indoor"
+    },
+    {
+      "key": "living_room",
+      "labelID": "Ruang Tamu",
+      "labelEN": "Living Room",
+      "area": 16,
+      "pricingClass": "indoor"
+    },
+    {
+      "key": "family_room",
+      "labelID": "Ruang Keluarga",
+      "labelEN": "Family Room",
+      "area": 18,
+      "pricingClass": "indoor"
+    },
+    {
+      "key": "kitchen",
+      "labelID": "Dapur",
+      "labelEN": "Kitchen",
+      "area": 12,
+      "pricingClass": "indoor"
+    },
+    {
+      "key": "dining_room",
+      "labelID": "Ruang Makan",
+      "labelEN": "Dining Room",
+      "area": 12,
+      "pricingClass": "indoor"
+    },
+    {
+      "key": "office",
+      "labelID": "Ruang Kerja",
+      "labelEN": "Home Office",
+      "area": 10,
+      "pricingClass": "indoor"
+    },
+    {
+      "key": "laundry",
+      "labelID": "Ruang Cuci",
+      "labelEN": "Laundry Room",
+      "area": 6,
+      "pricingClass": "indoor"
+    },
+    {
+      "key": "storage",
+      "labelID": "Gudang",
+      "labelEN": "Storage",
+      "area": 5,
+      "pricingClass": "indoor"
+    },
+    {
+      "key": "garage",
+      "labelID": "Garasi Tertutup",
+      "labelEN": "Enclosed Garage",
+      "area": 18,
+      "pricingClass": "indoor"
+    },
+    {
+      "key": "balcony",
+      "labelID": "Balkon",
+      "labelEN": "Balcony",
+      "area": 8,
+      "pricingClass": "special"
+    },
+    {
+      "key": "garden",
+      "labelID": "Taman",
+      "labelEN": "Garden",
+      "area": 20,
+      "pricingClass": "outdoor"
+    },
+    {
+      "key": "pool",
+      "labelID": "Kolam Renang",
+      "labelEN": "Swimming Pool",
+      "area": 20,
+      "pricingClass": "special"
+    }
+  ],
+  "circulationReservePct": null,
+  "staircaseAreaM2": null,
+  "rules": "DO NOT silently use garden/pool/balcony area in indoor construction price. Mark as needs separate consultation. Need architectural review for stairs/circulation and site coverage."
+}

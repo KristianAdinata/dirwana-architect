@@ -1,0 +1,551 @@
+[
+  {
+    "project": "mr-leo-apple-orchard",
+    "category": "villa",
+    "pdfPage": 5,
+    "photoIndex": 1,
+    "width": 800,
+    "height": 450,
+    "path": "/images/portfolio/villa/mr-leo-apple-orchard-01.jpg"
+  },
+  {
+    "project": "mr-leo-apple-orchard",
+    "category": "villa",
+    "pdfPage": 5,
+    "photoIndex": 2,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/villa/mr-leo-apple-orchard-02.jpg"
+  },
+  {
+    "project": "mr-leo-apple-orchard",
+    "category": "villa",
+    "pdfPage": 5,
+    "photoIndex": 3,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/villa/mr-leo-apple-orchard-03.jpg"
+  },
+  {
+    "project": "mr-leo-apple-orchard",
+    "category": "villa",
+    "pdfPage": 5,
+    "photoIndex": 4,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/villa/mr-leo-apple-orchard-04.jpg"
+  },
+  {
+    "project": "mr-leo-apple-orchard",
+    "category": "villa",
+    "pdfPage": 5,
+    "photoIndex": 5,
+    "width": 480,
+    "height": 216,
+    "path": "/images/portfolio/villa/mr-leo-apple-orchard-05.jpg"
+  },
+  {
+    "project": "mr-leo-apple-orchard",
+    "category": "villa",
+    "pdfPage": 5,
+    "photoIndex": 6,
+    "width": 400,
+    "height": 225,
+    "path": "/images/portfolio/villa/mr-leo-apple-orchard-06.jpg"
+  },
+  {
+    "project": "berawa-villa",
+    "category": "villa",
+    "pdfPage": 6,
+    "photoIndex": 1,
+    "width": 800,
+    "height": 533,
+    "path": "/images/portfolio/villa/berawa-villa-01.jpg"
+  },
+  {
+    "project": "berawa-villa",
+    "category": "villa",
+    "pdfPage": 6,
+    "photoIndex": 2,
+    "width": 400,
+    "height": 267,
+    "path": "/images/portfolio/villa/berawa-villa-02.jpg"
+  },
+  {
+    "project": "berawa-villa",
+    "category": "villa",
+    "pdfPage": 6,
+    "photoIndex": 3,
+    "width": 225,
+    "height": 400,
+    "path": "/images/portfolio/villa/berawa-villa-03.jpg"
+  },
+  {
+    "project": "berawa-villa",
+    "category": "villa",
+    "pdfPage": 6,
+    "photoIndex": 4,
+    "width": 320,
+    "height": 214,
+    "path": "/images/portfolio/villa/berawa-villa-04.jpg"
+  },
+  {
+    "project": "berawa-villa",
+    "category": "villa",
+    "pdfPage": 6,
+    "photoIndex": 5,
+    "width": 320,
+    "height": 214,
+    "path": "/images/portfolio/villa/berawa-villa-05.jpg"
+  },
+  {
+    "project": "berawa-villa",
+    "category": "villa",
+    "pdfPage": 6,
+    "photoIndex": 6,
+    "width": 320,
+    "height": 214,
+    "path": "/images/portfolio/villa/berawa-villa-06.jpg"
+  },
+  {
+    "project": "padonan-villa",
+    "category": "villa",
+    "pdfPage": 7,
+    "photoIndex": 1,
+    "width": 800,
+    "height": 600,
+    "path": "/images/portfolio/villa/padonan-villa-01.jpg"
+  },
+  {
+    "project": "padonan-villa",
+    "category": "villa",
+    "pdfPage": 7,
+    "photoIndex": 2,
+    "width": 400,
+    "height": 225,
+    "path": "/images/portfolio/villa/padonan-villa-02.jpg"
+  },
+  {
+    "project": "padonan-villa",
+    "category": "villa",
+    "pdfPage": 7,
+    "photoIndex": 3,
+    "width": 279,
+    "height": 320,
+    "path": "/images/portfolio/villa/padonan-villa-03.jpg"
+  },
+  {
+    "project": "padonan-villa",
+    "category": "villa",
+    "pdfPage": 7,
+    "photoIndex": 4,
+    "width": 225,
+    "height": 400,
+    "path": "/images/portfolio/villa/padonan-villa-04.jpg"
+  },
+  {
+    "project": "kwanji-villa",
+    "category": "villa",
+    "pdfPage": 8,
+    "photoIndex": 1,
+    "width": 800,
+    "height": 600,
+    "path": "/images/portfolio/villa/kwanji-villa-01.jpg"
+  },
+  {
+    "project": "kwanji-villa",
+    "category": "villa",
+    "pdfPage": 8,
+    "photoIndex": 2,
+    "width": 400,
+    "height": 225,
+    "path": "/images/portfolio/villa/kwanji-villa-02.jpg"
+  },
+  {
+    "project": "kwanji-villa",
+    "category": "villa",
+    "pdfPage": 8,
+    "photoIndex": 3,
+    "width": 240,
+    "height": 240,
+    "path": "/images/portfolio/villa/kwanji-villa-03.jpg"
+  },
+  {
+    "project": "kwanji-villa",
+    "category": "villa",
+    "pdfPage": 8,
+    "photoIndex": 4,
+    "width": 240,
+    "height": 240,
+    "path": "/images/portfolio/villa/kwanji-villa-04.jpg"
+  },
+  {
+    "project": "nuansa-balian-house",
+    "category": "rumah-tinggal",
+    "pdfPage": 9,
+    "photoIndex": 1,
+    "width": 800,
+    "height": 600,
+    "path": "/images/portfolio/rumah-tinggal/nuansa-balian-house-01.jpg"
+  },
+  {
+    "project": "nuansa-balian-house",
+    "category": "rumah-tinggal",
+    "pdfPage": 9,
+    "photoIndex": 2,
+    "width": 320,
+    "height": 240,
+    "path": "/images/portfolio/rumah-tinggal/nuansa-balian-house-02.jpg"
+  },
+  {
+    "project": "nuansa-balian-house",
+    "category": "rumah-tinggal",
+    "pdfPage": 9,
+    "photoIndex": 3,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/rumah-tinggal/nuansa-balian-house-03.jpg"
+  },
+  {
+    "project": "nuansa-balian-house",
+    "category": "rumah-tinggal",
+    "pdfPage": 9,
+    "photoIndex": 4,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/rumah-tinggal/nuansa-balian-house-04.jpg"
+  },
+  {
+    "project": "buluh-indah-apartment",
+    "category": "apartment",
+    "pdfPage": 10,
+    "photoIndex": 1,
+    "width": 581,
+    "height": 640,
+    "path": "/images/portfolio/apartment/buluh-indah-apartment-01.jpg"
+  },
+  {
+    "project": "buluh-indah-apartment",
+    "category": "apartment",
+    "pdfPage": 10,
+    "photoIndex": 2,
+    "width": 241,
+    "height": 320,
+    "path": "/images/portfolio/apartment/buluh-indah-apartment-02.jpg"
+  },
+  {
+    "project": "buluh-indah-apartment",
+    "category": "apartment",
+    "pdfPage": 10,
+    "photoIndex": 3,
+    "width": 225,
+    "height": 400,
+    "path": "/images/portfolio/apartment/buluh-indah-apartment-03.jpg"
+  },
+  {
+    "project": "buluh-indah-apartment",
+    "category": "apartment",
+    "pdfPage": 10,
+    "photoIndex": 4,
+    "width": 225,
+    "height": 400,
+    "path": "/images/portfolio/apartment/buluh-indah-apartment-04.jpg"
+  },
+  {
+    "project": "buluh-indah-apartment",
+    "category": "apartment",
+    "pdfPage": 10,
+    "photoIndex": 5,
+    "width": 225,
+    "height": 400,
+    "path": "/images/portfolio/apartment/buluh-indah-apartment-05.jpg"
+  },
+  {
+    "project": "tabanan",
+    "category": "rumah-tinggal",
+    "pdfPage": 11,
+    "photoIndex": 1,
+    "width": 800,
+    "height": 533,
+    "path": "/images/portfolio/rumah-tinggal/tabanan-01.jpg"
+  },
+  {
+    "project": "tabanan",
+    "category": "rumah-tinggal",
+    "pdfPage": 11,
+    "photoIndex": 2,
+    "width": 320,
+    "height": 240,
+    "path": "/images/portfolio/rumah-tinggal/tabanan-02.jpg"
+  },
+  {
+    "project": "tabanan",
+    "category": "rumah-tinggal",
+    "pdfPage": 11,
+    "photoIndex": 3,
+    "width": 225,
+    "height": 400,
+    "path": "/images/portfolio/rumah-tinggal/tabanan-03.jpg"
+  },
+  {
+    "project": "tabanan-house-1",
+    "category": "rumah-tinggal",
+    "pdfPage": 12,
+    "photoIndex": 1,
+    "width": 800,
+    "height": 450,
+    "path": "/images/portfolio/rumah-tinggal/tabanan-house-1-01.jpg"
+  },
+  {
+    "project": "tabanan-house-1",
+    "category": "rumah-tinggal",
+    "pdfPage": 12,
+    "photoIndex": 2,
+    "width": 225,
+    "height": 400,
+    "path": "/images/portfolio/rumah-tinggal/tabanan-house-1-02.jpg"
+  },
+  {
+    "project": "tabanan-house-1",
+    "category": "rumah-tinggal",
+    "pdfPage": 12,
+    "photoIndex": 3,
+    "width": 400,
+    "height": 225,
+    "path": "/images/portfolio/rumah-tinggal/tabanan-house-1-03.jpg"
+  },
+  {
+    "project": "tabanan-house-1",
+    "category": "rumah-tinggal",
+    "pdfPage": 12,
+    "photoIndex": 4,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/rumah-tinggal/tabanan-house-1-04.jpg"
+  },
+  {
+    "project": "tabanan-house-2",
+    "category": "rumah-tinggal",
+    "pdfPage": 13,
+    "photoIndex": 1,
+    "width": 800,
+    "height": 535,
+    "path": "/images/portfolio/rumah-tinggal/tabanan-house-2-01.jpg"
+  },
+  {
+    "project": "tabanan-house-2",
+    "category": "rumah-tinggal",
+    "pdfPage": 13,
+    "photoIndex": 2,
+    "width": 320,
+    "height": 240,
+    "path": "/images/portfolio/rumah-tinggal/tabanan-house-2-02.jpg"
+  },
+  {
+    "project": "tabanan-house-2",
+    "category": "rumah-tinggal",
+    "pdfPage": 13,
+    "photoIndex": 3,
+    "width": 320,
+    "height": 240,
+    "path": "/images/portfolio/rumah-tinggal/tabanan-house-2-03.jpg"
+  },
+  {
+    "project": "tabanan-house-2",
+    "category": "rumah-tinggal",
+    "pdfPage": 13,
+    "photoIndex": 4,
+    "width": 320,
+    "height": 240,
+    "path": "/images/portfolio/rumah-tinggal/tabanan-house-2-04.jpg"
+  },
+  {
+    "project": "batanghari-house",
+    "category": "rumah-tinggal",
+    "pdfPage": 14,
+    "photoIndex": 1,
+    "width": 505,
+    "height": 560,
+    "path": "/images/portfolio/rumah-tinggal/batanghari-house-01.jpg"
+  },
+  {
+    "project": "batanghari-house",
+    "category": "rumah-tinggal",
+    "pdfPage": 14,
+    "photoIndex": 2,
+    "width": 300,
+    "height": 400,
+    "path": "/images/portfolio/rumah-tinggal/batanghari-house-02.jpg"
+  },
+  {
+    "project": "batanghari-house",
+    "category": "rumah-tinggal",
+    "pdfPage": 14,
+    "photoIndex": 3,
+    "width": 300,
+    "height": 400,
+    "path": "/images/portfolio/rumah-tinggal/batanghari-house-03.jpg"
+  },
+  {
+    "project": "batanghari-house",
+    "category": "rumah-tinggal",
+    "pdfPage": 14,
+    "photoIndex": 4,
+    "width": 270,
+    "height": 480,
+    "path": "/images/portfolio/rumah-tinggal/batanghari-house-04.jpg"
+  },
+  {
+    "project": "villa-kamanda",
+    "category": "interior",
+    "pdfPage": 15,
+    "photoIndex": 1,
+    "width": 600,
+    "height": 800,
+    "path": "/images/portfolio/interior/villa-kamanda-01.jpg"
+  },
+  {
+    "project": "villa-kamanda",
+    "category": "interior",
+    "pdfPage": 15,
+    "photoIndex": 2,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/interior/villa-kamanda-02.jpg"
+  },
+  {
+    "project": "villa-kamanda",
+    "category": "interior",
+    "pdfPage": 15,
+    "photoIndex": 3,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/interior/villa-kamanda-03.jpg"
+  },
+  {
+    "project": "villa-tabayuh",
+    "category": "interior",
+    "pdfPage": 16,
+    "photoIndex": 1,
+    "width": 573,
+    "height": 726,
+    "path": "/images/portfolio/interior/villa-tabayuh-01.jpg"
+  },
+  {
+    "project": "villa-tabayuh",
+    "category": "interior",
+    "pdfPage": 16,
+    "photoIndex": 2,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/interior/villa-tabayuh-02.jpg"
+  },
+  {
+    "project": "villa-tabayuh",
+    "category": "interior",
+    "pdfPage": 16,
+    "photoIndex": 3,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/interior/villa-tabayuh-03.jpg"
+  },
+  {
+    "project": "villa-tabayuh",
+    "category": "interior",
+    "pdfPage": 16,
+    "photoIndex": 4,
+    "width": 285,
+    "height": 318,
+    "path": "/images/portfolio/interior/villa-tabayuh-04.jpg"
+  },
+  {
+    "project": "villa-tabayuh",
+    "category": "interior",
+    "pdfPage": 16,
+    "photoIndex": 5,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/interior/villa-tabayuh-05.jpg"
+  },
+  {
+    "project": "villa-bozec",
+    "category": "interior",
+    "pdfPage": 17,
+    "photoIndex": 1,
+    "width": 600,
+    "height": 800,
+    "path": "/images/portfolio/interior/villa-bozec-01.jpg"
+  },
+  {
+    "project": "villa-bozec",
+    "category": "interior",
+    "pdfPage": 17,
+    "photoIndex": 2,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/interior/villa-bozec-02.jpg"
+  },
+  {
+    "project": "villa-bozec",
+    "category": "interior",
+    "pdfPage": 17,
+    "photoIndex": 3,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/interior/villa-bozec-03.jpg"
+  },
+  {
+    "project": "villa-richard-swanelli",
+    "category": "interior",
+    "pdfPage": 18,
+    "photoIndex": 1,
+    "width": 600,
+    "height": 800,
+    "path": "/images/portfolio/interior/villa-richard-swanelli-01.jpg"
+  },
+  {
+    "project": "villa-richard-swanelli",
+    "category": "interior",
+    "pdfPage": 18,
+    "photoIndex": 2,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/interior/villa-richard-swanelli-02.jpg"
+  },
+  {
+    "project": "villa-richard-swanelli",
+    "category": "interior",
+    "pdfPage": 18,
+    "photoIndex": 3,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/interior/villa-richard-swanelli-03.jpg"
+  },
+  {
+    "project": "villa-braunsteiner",
+    "category": "interior",
+    "pdfPage": 19,
+    "photoIndex": 1,
+    "width": 600,
+    "height": 800,
+    "path": "/images/portfolio/interior/villa-braunsteiner-01.jpg"
+  },
+  {
+    "project": "villa-braunsteiner",
+    "category": "interior",
+    "pdfPage": 19,
+    "photoIndex": 2,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/interior/villa-braunsteiner-02.jpg"
+  },
+  {
+    "project": "villa-braunsteiner",
+    "category": "interior",
+    "pdfPage": 19,
+    "photoIndex": 3,
+    "width": 240,
+    "height": 320,
+    "path": "/images/portfolio/interior/villa-braunsteiner-03.jpg"
+  }
+]

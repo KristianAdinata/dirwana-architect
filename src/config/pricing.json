@@ -1,0 +1,31 @@
+{
+  "currency": "IDR",
+  "unit": "m2",
+  "constructionStartingRatesPerM2": {
+    "rumah_tinggal": {
+      "1": 5500000,
+      "2": 7000000,
+      "3": 7500000
+    },
+    "villa": {
+      "1": 6500000,
+      "2": 7500000,
+      "3": 8000000
+    },
+    "kos_ruko": {
+      "1": 5000000,
+      "2": 6500000,
+      "3": 7000000
+    }
+  },
+  "otherBuildingType": "consult_whatsapp",
+  "designRatePerM2": 100000,
+  "designDiscountIfConstructionWithDirwana": 0.5,
+  "designDiscountIsConditional": true,
+  "pricingModel": "construction cost = total estimated enclosed constructed area across all selected floors * rate based on building type AND total floor count; NOT separate per-floor tier calculation",
+  "constructionFiguresAreStartingEstimates": true,
+  "waPhoneE164Digits": "6281237489756",
+  "waMessageMustExcludeAllPrices": true,
+  "adminDashboardNow": false,
+  "storedLeadsNow": false
+}

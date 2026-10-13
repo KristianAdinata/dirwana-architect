@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 235" role="img" aria-label="DIRWANA ARCHITECT - DESIGN &amp; BUILD">
+<rect width="960" height="235" fill="none"/>
+<g fill="none" stroke="#A48257" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter">
+<path d="M45 175 V58 L112 20 L179 58 V175 M63 175 V70 L112 42 L161 70 V175 M84 175 V92 L112 76 L140 92 V175"/>
+<path d="M30 177 H195" stroke-width="4" />
+</g>
+<text x="232" y="116" fill="#202420" font-family="Georgia,serif" font-size="53" letter-spacing="4.1" font-weight="bold">DIRWANA ARCHITECT</text>
+<line x1="236" y1="140" x2="876" y2="140" stroke="#A48257" stroke-width="2" />
+<text x="238" y="179" fill="#A48257" font-family="Arial,sans-serif" font-size="24" letter-spacing="10">DESIGN &amp; BUILD</text>
+</svg>
