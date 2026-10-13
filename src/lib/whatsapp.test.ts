@@ -10,6 +10,8 @@ describe("WhatsApp consultation", () => {
     } });
     expect(message).toContain("2 × Kamar Tidur");
     expect(message).toContain("Tanah: 10 m × 20 m (200 m²)");
+    expect(message).toContain("Koridor & ruang sisa: 5% × 24 m² = 1,2 m²");
+    expect(message).toContain("Koridor & ruang sisa: 5% × 5 m² = 0,25 m²");
     expect(message).not.toMatch(/Rp|980000000|14\.000\.000|tarif|biaya desain|biaya bangun/i);
     expect(buildWhatsAppUrl({ lead, locale: "id" })).toMatch(/^https:\/\/wa\.me\/6281237489756\?text=/);
   });
@@ -40,7 +42,9 @@ describe("WhatsApp consultation", () => {
       floors: [{ bedroom: 1 }], extraAreas: [{ customRooms: [{ name: "Ruang hobi", area: 14 }], staircaseArea: 9, terraceArea: 12 }],
     } };
     const message = buildWhatsAppMessage(input);
-    expect(message).toContain("Ruang hobi: 14 m² (estimasi terpisah)");
+    expect(message).toContain("Ruang hobi: 14 m²");
+    expect(message).toContain("Koridor & ruang sisa: 5% × 26 m² = 1,3 m²");
+    expect(message).toContain("Lantai 1 — 27,3 m² perkiraan ruang indoor");
     expect(message).toContain("Area Tangga: 9 m² (estimasi terpisah)");
     expect(message).toContain("Teras: 12 m² (estimasi terpisah)");
     expect(message).not.toMatch(/\bRp\.?\s*\d|\bIDR\b|biaya|tarif|\d[.,]000[.,]000/i);

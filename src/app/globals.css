@@ -272,6 +272,14 @@ p { line-height:1.7; }
 .manual-area-card { display:flex; justify-content:space-between; align-items:center; gap:18px; min-height:84px; margin-top:10px; padding:14px; border:1px solid var(--line); background:#fff; }
 .manual-area-card.chosen { border-color:#b9a17f; background:#fcf8f0; }
 .manual-area-card .field { width:120px; flex-shrink:0; }
+.circulation-panel { margin-top:34px; padding:22px; border:1px solid #d1c1a8; background:#f4efe5; }
+.circulation-panel .room-group-heading { margin-bottom:8px; }
+.circulation-panel>p { margin:0 0 18px; color:var(--muted); font-size:11px; }
+.circulation-breakdown { display:grid; gap:10px; }
+.circulation-breakdown>div { display:flex; align-items:baseline; justify-content:space-between; gap:16px; font-size:12px; }
+.circulation-breakdown span { color:#5f625b; line-height:1.4; }
+.circulation-breakdown strong { flex-shrink:0; text-align:right; }
+.circulation-breakdown .total { padding-top:12px; border-top:1px solid #cabfae; }
 .draft-note,.save-note { margin:25px 0 0; color:var(--muted); font-size:11px; }
 .calculator-aside { position:sticky; top:108px; }
 .summary-card { padding:29px; border:1px solid #dbd8cf; background:#f0ede5; }

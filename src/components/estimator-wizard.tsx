@@ -3,7 +3,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, ChevronDown, Minus, Plus, RotateCcw } from "lucide-react";
 import { getDictionary, type Locale } from "@/i18n";
-import { calculateEstimate, formatArea, formatRupiah, roomPresets, type BuildingType, type EstimatorInput, type FloorCount, type RoomCounts, type RoomPreset } from "@/lib/estimate";
+import { calculateEstimate, circulationReservePctByFloor, formatArea, formatRupiah, roomPresets, type BuildingType, type EstimatorInput, type FloorCount, type RoomCounts, type RoomPreset } from "@/lib/estimate";
 import { buildWhatsAppUrl, consultationAdmins, validateLead, type Lead } from "@/lib/whatsapp";
 
 type CustomRoomDraft = { id: string; name: string; area: string };
@@ -171,6 +171,8 @@ export function EstimatorWizard({ locale }: { locale: Locale }) {
 function FloorEditor({ locale, state, estimate, onFloorChange, onRoomChange, onExtraAreaChange, onAddCustomRoom, onCustomRoomChange, onRemoveCustomRoom, showExtraError }: { locale: Locale; state: WizardState; estimate: ReturnType<typeof calculateEstimate> | null; onFloorChange: (floor: number) => void; onRoomChange: (key: string, delta: number) => void; onExtraAreaChange: (field: "staircaseArea" | "terraceArea", value: string) => void; onAddCustomRoom: () => void; onCustomRoomChange: (id: string, field: "name" | "area", value: string) => void; onRemoveCustomRoom: (id: string) => void; showExtraError: boolean }) {
   const t = getDictionary(locale);
   const extras = state.extraAreas[state.activeFloor];
+  const floorEstimate = estimate?.floors[state.activeFloor];
+  const circulationPct = Math.round(circulationReservePctByFloor[state.activeFloor] * 100);
   return <>
     <div className="floor-tabs" role="tablist" aria-label={t.calc.floorTitle}>{Array.from({ length: state.floorCount }, (_, index) => <button key={index} type="button" role="tab" aria-selected={state.activeFloor === index} className={state.activeFloor === index ? "active" : ""} onClick={() => onFloorChange(index)}>{t.calc.floor} {index + 1}<span>{estimate ? formatArea(estimate.floors[index].indoorArea, locale) : "0 m²"}</span></button>)}</div>
     {(["indoor", "outdoor", "special"] as const).map((category) => <div className="room-group" key={category}>
@@ -178,7 +180,7 @@ function FloorEditor({ locale, state, estimate, onFloorChange, onRoomChange, onE
       <div className="room-grid">{roomPresets.filter((room) => room.pricingClass === category).map((room) => <RoomPicker key={room.key} room={room} locale={locale} count={state.floors[state.activeFloor]?.[room.key] ?? 0} onChange={(delta) => onRoomChange(room.key, delta)}/>)}</div>
       {category === "outdoor" && <ManualAreaCard label={t.calc.terrace} help={t.calc.separateAreaHelp} areaLabel={t.calc.manualArea} value={extras.terraceArea} invalid={showExtraError && !validOptionalArea(extras.terraceArea)} onChange={(value) => onExtraAreaChange("terraceArea", value)}/>}
       {category === "special" && <ManualAreaCard label={t.calc.staircase} help={t.calc.separateAreaHelp} areaLabel={t.calc.manualArea} value={extras.staircaseArea} invalid={showExtraError && !validOptionalArea(extras.staircaseArea)} onChange={(value) => onExtraAreaChange("staircaseArea", value)}/>}
-      {category === "special" && <div className="custom-room-section">
+      {category === "indoor" && <div className="custom-room-section">
         <div className="room-group-heading"><h3>{t.calc.customRooms}</h3></div>
         <p className="extra-area-help">{t.calc.customRoomHelp}</p>
         {extras.customRooms.map((room) => <div className="custom-room-row" key={room.id}>
@@ -189,6 +191,11 @@ function FloorEditor({ locale, state, estimate, onFloorChange, onRoomChange, onE
         <button type="button" className="add-custom-room" onClick={onAddCustomRoom} disabled={extras.customRooms.length >= 20}><Plus size={17}/>{t.calc.addCustomRoom}</button>
       </div>}
     </div>)}
+    <div className="circulation-panel" aria-live="polite">
+      <div className="room-group-heading"><h3>{t.calc.circulation} · {circulationPct}%</h3></div>
+      <p>{t.calc.circulationHelp}</p>
+      <div className="circulation-breakdown"><div><span>{t.calc.roomAreaSubtotal}</span><strong>{formatArea(floorEstimate?.baseIndoorArea ?? 0, locale)}</strong></div><div><span>{t.calc.circulation} ({circulationPct}% × {formatArea(floorEstimate?.baseIndoorArea ?? 0, locale)})</span><strong>{formatArea(floorEstimate?.circulationArea ?? 0, locale)}</strong></div><div className="total"><span>{t.calc.calculatedFloorArea}</span><strong>{formatArea(floorEstimate?.indoorArea ?? 0, locale)}</strong></div></div>
+    </div>
   </>;
 }
 
@@ -208,15 +215,14 @@ function RoomPicker({ room, locale, count, onChange }: { room: RoomPreset; local
 function EstimateSummary({ locale, estimate, roomCount, other = false }: { locale: Locale; estimate: ReturnType<typeof calculateEstimate> | null; roomCount: number; other?: boolean }) {
   const t = getDictionary(locale);
   if (other) return <div className="summary-card"><p className="eyebrow">DIRWANA ARCHITECT</p><h3>{t.calc.other}</h3><p>{t.calc.otherHelp}</p></div>;
-  const extraAreas = estimate && (estimate.totalCustomRoomArea > 0 || estimate.totalStaircaseArea > 0 || estimate.totalTerraceArea > 0) ? <div className="summary-area-list separate-area-list">
-    {estimate.totalCustomRoomArea > 0 && <div><span>{t.calc.customRooms}</span><strong>{formatArea(estimate.totalCustomRoomArea, locale)}</strong></div>}
+  const extraAreas = estimate && (estimate.totalStaircaseArea > 0 || estimate.totalTerraceArea > 0) ? <div className="summary-area-list separate-area-list">
     {estimate.totalStaircaseArea > 0 && <div><span>{t.calc.staircase}</span><strong>{formatArea(estimate.totalStaircaseArea, locale)}</strong></div>}
     {estimate.totalTerraceArea > 0 && <div><span>{t.calc.terrace}</span><strong>{formatArea(estimate.totalTerraceArea, locale)}</strong></div>}
     <p>{t.calc.separateAreaHelp}</p>
   </div> : null;
   return <div className="summary-card"><div className="summary-top"><p className="eyebrow">{t.calc.resultsTitle}</p><span>{roomCount} {t.calc.selected}</span></div>
     {!estimate || roomCount === 0 || estimate.totalIndoorArea === 0 ? <><div className="summary-empty"><span>✳</span><p>{t.calc.emptyRooms}</p></div>{extraAreas}{estimate?.hasSeparateItems && <p className="info-note">{t.calc.specialNote}</p>}</> : <>
-      <div className="summary-area-list"><div><span>{t.calc.landArea}</span><strong>{formatArea(estimate.landArea, locale)}</strong></div>{estimate.floors.map((floor, index) => <div key={index}><span>{t.calc.floor} {index + 1}</span><strong>{formatArea(floor.indoorArea, locale)}</strong></div>)}<div className="total"><span>{t.calc.totalArea}</span><strong>{formatArea(estimate.totalIndoorArea, locale)}</strong></div></div>
+      <div className="summary-area-list"><div><span>{t.calc.landArea}</span><strong>{formatArea(estimate.landArea, locale)}</strong></div>{estimate.floors.map((floor, index) => <div key={index}><span>{t.calc.floor} {index + 1}</span><strong>{formatArea(floor.indoorArea, locale)}</strong></div>)}<div><span>{t.calc.circulationTotal}</span><strong>{formatArea(estimate.totalCirculationArea, locale)}</strong></div><div className="total"><span>{t.calc.totalArea}</span><strong>{formatArea(estimate.totalIndoorArea, locale)}</strong></div></div>
       {extraAreas}
       <div className="summary-prices"><div><span>{t.calc.constructionRate}</span><strong>{formatRupiah(estimate.constructionRate)}</strong></div><div className="featured-price"><span>{t.calc.constructionCost}</span><strong>{formatRupiah(estimate.constructionCost)}</strong></div><div><span>{t.calc.designRate}</span><strong>{formatRupiah(estimate.designRate)}</strong></div><div><span>{t.calc.designCost}</span><strong>{formatRupiah(estimate.regularDesignCost)}</strong></div></div>
       <div className="discount-box"><span>{t.calc.conditionalDesign}</span><strong>{formatRupiah(estimate.conditionalDesignCost)}</strong><p>{t.calc.conditionalNote}</p></div>

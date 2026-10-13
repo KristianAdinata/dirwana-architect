@@ -26,18 +26,18 @@ npm run build
 - `src/lib/`: logika harga, WhatsApp, proyek, metadata, dan test.
 - `src/config/pricing.json`: sumber tarif, diskon bersyarat, dan nomor WhatsApp Admin 1.
 - `src/config/contact.json`: nomor WhatsApp Admin 2 dan akun Instagram.
-- `src/config/room-presets.example.json`: **ukuran ruang contoh sementara**; perlu validasi arsitek. Sirkulasi belum memiliki nilai resmi sehingga tidak dihitung.
+- `src/config/room-presets.example.json`: **ukuran ruang contoh sementara** dan persentase tambahan koridor/ruang sisa per lantai.
 - `content/projects.json` dan `content/image-manifest.json`: data 15 proyek dan indeks 61 foto portofolio dari PDF klien.
 - `public/images/portfolio/`: foto proyek asli. `content/portfolio-contact-sheet.jpg` adalah lembar tinjau internal untuk memilih foto sebelum publikasi.
 - `public/branding/`: logo dan favicon konsep sementara, belum disetujui klien.
 - `docs/`: asal data, catatan persetujuan sebelum live, dan gambar referensi internal yang tidak ditampilkan di website.
 
-Kalkulator menggunakan total luas ruang indoor preset seluruh lantai dikali **satu tarif** sesuai jenis bangunan dan jumlah lantai total. Luas tersebut adalah perkiraan kebutuhan ruang, belum luas bangunan final atau pemeriksaan perizinan. Ruang tambahan dengan luas sendiri, Area Tangga, dan Teras hanya dicatat untuk konsultasi; tidak mengubah perhitungan biaya. Taman, kolam, dan balkon juga memerlukan estimasi terpisah. Diskon desain 50% hanya berlaku jika konstruksi dikerjakan DIRWANA. Pengunjung memilih Admin 1 atau Admin 2; pesan WhatsApp memuat kebutuhan proyek tanpa nominal biaya dan baru terkirim setelah pengunjung menekan Kirim di WhatsApp.
+Kalkulator menjumlahkan luas ruang dalam preset dan ruang tambahan dengan luas yang diisi pengunjung per lantai. Tambahan otomatis untuk koridor/ruang sisa adalah **5% di setiap lantai** dari jumlah tersebut. Luas terhitung seluruh lantai dikalikan **satu tarif** sesuai jenis bangunan dan jumlah lantai total. Luas tersebut adalah perkiraan kebutuhan ruang, belum luas bangunan final atau pemeriksaan perizinan. Area Tangga dan Teras dicatat terpisah tanpa mengubah estimasi biaya umum. Taman, kolam, dan balkon juga memerlukan estimasi terpisah. Diskon desain 50% hanya berlaku jika konstruksi dikerjakan DIRWANA. Pengunjung memilih Admin 1 atau Admin 2; pesan WhatsApp memuat kebutuhan proyek tanpa nominal biaya dan baru terkirim setelah pengunjung menekan Kirim di WhatsApp.
 
 ## Sebelum publikasi
 
 - Minta persetujuan logo, pemilihan proyek, hak penggunaan foto, dan foto resolusi tinggi. Sumber foto adalah PDF portofolio klien; sebagian gambar berupa rendering atau progres, dan satu foto Berawa Villa memiliki watermark.
-- Validasi ukuran ruang, cakupan tarif konstruksi, tanggal berlaku tarif, area layanan, serta komponen yang belum dihitung seperti sirkulasi, tangga, taman, kolam, dan balkon. Jangan menganggap kalkulator sebagai RAB atau pemeriksaan KDB/KLB.
+- Validasi ukuran ruang, cakupan tarif konstruksi, tanggal berlaku tarif, area layanan, serta komponen yang dicatat terpisah seperti tangga, teras, taman, kolam, dan balkon. Jangan menganggap kalkulator sebagai RAB atau pemeriksaan KDB/KLB.
 - Tinjau terjemahan English, nama dan status proyek, serta data kontak sebelum tayang.
 - Tentukan domain/hosting dan isi `NEXT_PUBLIC_SITE_URL` (lihat `.env.example`) agar canonical URL dan sitemap memakai domain produksi. Tanpa nilai tersebut, sitemap kosong.
 

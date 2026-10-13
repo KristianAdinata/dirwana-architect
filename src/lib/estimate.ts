@@ -16,8 +16,10 @@ export type EstimatorInput = {
   floors: RoomCounts[];
   extraAreas?: FloorExtraAreas[];
 };
-// TODO_CLIENT_REVIEW: room sizes and optional circulation/stair dimensions need architect approval.
+// Room sizes remain provisional; the per-floor corridor allowance follows client direction.
 export const roomPresets = presetData.roomSizes as RoomPreset[];
+export const circulationReservePctByFloor = presetData.circulationReservePctByFloor;
+const roundArea = (area: number) => Math.round((area + Number.EPSILON) * 100) / 100;
 
 export function isBuildingType(value: string): value is BuildingType {
   return value === "rumah_tinggal" || value === "villa" || value === "kos_ruko";
@@ -41,10 +43,14 @@ export function calculateEstimate(input: EstimatorInput) {
     }
     const areaOf = (pricingClass: RoomClass) => roomPresets.reduce((area, room) =>
       area + (room.pricingClass === pricingClass ? room.area * (counts[room.key] ?? 0) : 0), 0);
-    const customRoomArea = extras.customRooms.reduce((area, room) => area + room.area, 0);
-    return { indoorArea: areaOf("indoor"), outdoorArea: areaOf("outdoor"), specialArea: areaOf("special") + extras.staircaseArea + extras.terraceArea + customRoomArea, customRoomArea, staircaseArea: extras.staircaseArea, terraceArea: extras.terraceArea };
+    const customRoomArea = roundArea(extras.customRooms.reduce((area, room) => area + room.area, 0));
+    const baseIndoorArea = roundArea(areaOf("indoor") + customRoomArea);
+    const circulationPct = circulationReservePctByFloor[index];
+    const circulationArea = roundArea(baseIndoorArea * circulationPct);
+    const indoorArea = roundArea(baseIndoorArea + circulationArea);
+    return { baseIndoorArea, circulationPct, circulationArea, indoorArea, outdoorArea: areaOf("outdoor"), specialArea: areaOf("special") + extras.staircaseArea + extras.terraceArea, customRoomArea, staircaseArea: extras.staircaseArea, terraceArea: extras.terraceArea };
   });
-  const totalIndoorArea = floors.reduce((sum, floor) => sum + floor.indoorArea, 0);
+  const totalIndoorArea = roundArea(floors.reduce((sum, floor) => sum + floor.indoorArea, 0));
   const landArea = input.landLength * input.landWidth;
   const rate = pricing.constructionStartingRatesPerM2[input.buildingType][String(input.floorCount) as "1" | "2" | "3"];
   const regularDesignCost = totalIndoorArea * pricing.designRatePerM2;
@@ -52,7 +58,9 @@ export function calculateEstimate(input: EstimatorInput) {
     floors,
     landArea,
     totalIndoorArea,
-    totalCustomRoomArea: floors.reduce((sum, floor) => sum + floor.customRoomArea, 0),
+    totalBaseIndoorArea: roundArea(floors.reduce((sum, floor) => sum + floor.baseIndoorArea, 0)),
+    totalCirculationArea: roundArea(floors.reduce((sum, floor) => sum + floor.circulationArea, 0)),
+    totalCustomRoomArea: roundArea(floors.reduce((sum, floor) => sum + floor.customRoomArea, 0)),
     totalStaircaseArea: floors.reduce((sum, floor) => sum + floor.staircaseArea, 0),
     totalTerraceArea: floors.reduce((sum, floor) => sum + floor.terraceArea, 0),
     constructionRate: rate,
@@ -70,4 +78,4 @@ export const formatRupiah = (value: number) => new Intl.NumberFormat("id-ID", {
 }).format(value);
 
 export const formatArea = (value: number, locale: "id" | "en" = "id") =>
-  `${new Intl.NumberFormat(locale === "id" ? "id-ID" : "en-US", { maximumFractionDigits: 1 }).format(value)} m²`;
+  `${new Intl.NumberFormat(locale === "id" ? "id-ID" : "en-US", { maximumFractionDigits: 2 }).format(value)} m²`;

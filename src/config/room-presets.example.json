@@ -101,7 +101,7 @@
       "pricingClass": "special"
     }
   ],
-  "circulationReservePct": null,
+  "circulationReservePctByFloor": [0.05, 0.05, 0.05],
   "staircaseAreaM2": null,
-  "rules": "DO NOT silently use garden/pool/balcony area in indoor construction price. Mark as needs separate consultation. Need architectural review for stairs/circulation and site coverage."
+  "rules": "Apply the 5% corridor/open-space allowance on each selected floor to indoor preset and custom room area. Keep garden/pool/balcony/staircase/terrace outside the generic construction price. Final site coverage and built area need architectural review."
 }

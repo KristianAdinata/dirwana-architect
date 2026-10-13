@@ -1,6 +1,6 @@
 import pricing from "@/config/pricing.json";
 import contact from "@/config/contact.json";
-import { calculateEstimate, roomPresets, type EstimatorInput } from "@/lib/estimate";
+import { calculateEstimate, formatArea, roomPresets, type EstimatorInput } from "@/lib/estimate";
 
 export type Lead = { name: string; whatsapp: string; location: string };
 export type WhatsAppInput = { lead: Lead; locale: "id" | "en"; estimate?: EstimatorInput; otherBuildingType?: boolean };
@@ -58,17 +58,18 @@ export function buildWhatsAppMessage({ lead, locale, estimate, otherBuildingType
       `${id ? "Jumlah lantai" : "Floors"}: ${estimate.floorCount}`);
     result.floors.forEach((floor, index) => {
       const counts = estimate.floors[index] ?? {};
-      lines.push("", `${id ? "Lantai" : "Floor"} ${index + 1} — ${floor.indoorArea} m² ${id ? "perkiraan ruang indoor" : "estimated indoor rooms"}`);
+      lines.push("", `${id ? "Lantai" : "Floor"} ${index + 1} — ${formatArea(floor.indoorArea, locale)} ${id ? "perkiraan ruang indoor" : "estimated indoor rooms"}`);
       roomPresets.forEach((room) => {
         const count = counts[room.key] ?? 0;
         if (count > 0) lines.push(`- ${count} × ${id ? room.labelID : room.labelEN}${room.pricingClass !== "indoor" ? ` (${id ? "estimasi terpisah" : "separate estimate"})` : ""}`);
       });
       const extras = estimate.extraAreas?.[index];
-      extras?.customRooms.forEach((room) => lines.push(`- ${clean(room.name)}: ${room.area} m² (${id ? "estimasi terpisah" : "separate estimate"})`));
+      extras?.customRooms.forEach((room) => lines.push(`- ${clean(room.name)}: ${formatArea(room.area, locale)}`));
+      if (floor.baseIndoorArea > 0) lines.push(`- ${id ? "Koridor & ruang sisa" : "Corridor & unlisted space"}: ${Math.round(floor.circulationPct * 100)}% × ${formatArea(floor.baseIndoorArea, locale)} = ${formatArea(floor.circulationArea, locale)}`);
       if (extras?.staircaseArea) lines.push(`- ${id ? "Area Tangga" : "Staircase Area"}: ${extras.staircaseArea} m² (${id ? "estimasi terpisah" : "separate estimate"})`);
       if (extras?.terraceArea) lines.push(`- ${id ? "Teras" : "Terrace"}: ${extras.terraceArea} m² (${id ? "estimasi terpisah" : "separate estimate"})`);
     });
-    lines.push("", `${id ? "Total perkiraan luas ruang indoor" : "Total estimated indoor room area"}: ${result.totalIndoorArea} m²`);
+    lines.push("", `${id ? "Total perkiraan luas ruang indoor" : "Total estimated indoor room area"}: ${formatArea(result.totalIndoorArea, locale)}`);
   }
   lines.push("", id ? "Mohon informasi untuk langkah konsultasi berikutnya. Terima kasih." : "Please advise on the next consultation step. Thank you.");
   return lines.join("\n");
