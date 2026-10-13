@@ -6,12 +6,15 @@ export type FloorCount = 1 | 2 | 3;
 export type RoomClass = "indoor" | "outdoor" | "special";
 export type RoomPreset = { key: string; labelID: string; labelEN: string; area: number; pricingClass: RoomClass };
 export type RoomCounts = Record<string, number>;
+export type CustomRoom = { name: string; area: number };
+export type FloorExtraAreas = { staircaseArea: number; terraceArea: number; customRooms: CustomRoom[] };
 export type EstimatorInput = {
   buildingType: BuildingType;
   landLength: number;
   landWidth: number;
   floorCount: FloorCount;
   floors: RoomCounts[];
+  extraAreas?: FloorExtraAreas[];
 };
 // TODO_CLIENT_REVIEW: room sizes and optional circulation/stair dimensions need architect approval.
 export const roomPresets = presetData.roomSizes as RoomPreset[];
@@ -28,12 +31,18 @@ export function calculateEstimate(input: EstimatorInput) {
   }
   const floors = Array.from({ length: input.floorCount }, (_, index) => {
     const counts = input.floors[index] ?? {};
+    const extras = input.extraAreas?.[index] ?? { staircaseArea: 0, terraceArea: 0, customRooms: [] };
     for (const quantity of Object.values(counts)) {
       if (!Number.isInteger(quantity) || quantity < 0) throw new Error("Room quantities must be nonnegative integers");
     }
+    if (![extras.staircaseArea, extras.terraceArea].every((area) => Number.isFinite(area) && area >= 0)) throw new Error("Manual areas must be nonnegative");
+    for (const room of extras.customRooms) {
+      if (!room.name.trim() || !Number.isFinite(room.area) || room.area <= 0) throw new Error("Custom rooms need a name and positive area");
+    }
     const areaOf = (pricingClass: RoomClass) => roomPresets.reduce((area, room) =>
       area + (room.pricingClass === pricingClass ? room.area * (counts[room.key] ?? 0) : 0), 0);
-    return { indoorArea: areaOf("indoor"), outdoorArea: areaOf("outdoor"), specialArea: areaOf("special") };
+    const customRoomArea = extras.customRooms.reduce((area, room) => area + room.area, 0);
+    return { indoorArea: areaOf("indoor"), outdoorArea: areaOf("outdoor"), specialArea: areaOf("special") + extras.staircaseArea + extras.terraceArea + customRoomArea, customRoomArea, staircaseArea: extras.staircaseArea, terraceArea: extras.terraceArea };
   });
   const totalIndoorArea = floors.reduce((sum, floor) => sum + floor.indoorArea, 0);
   const landArea = input.landLength * input.landWidth;
@@ -43,6 +52,9 @@ export function calculateEstimate(input: EstimatorInput) {
     floors,
     landArea,
     totalIndoorArea,
+    totalCustomRoomArea: floors.reduce((sum, floor) => sum + floor.customRoomArea, 0),
+    totalStaircaseArea: floors.reduce((sum, floor) => sum + floor.staircaseArea, 0),
+    totalTerraceArea: floors.reduce((sum, floor) => sum + floor.terraceArea, 0),
     constructionRate: rate,
     constructionCost: totalIndoorArea * rate,
     designRate: pricing.designRatePerM2,

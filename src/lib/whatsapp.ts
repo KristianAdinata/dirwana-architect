@@ -1,14 +1,24 @@
 import pricing from "@/config/pricing.json";
+import contact from "@/config/contact.json";
 import { calculateEstimate, roomPresets, type EstimatorInput } from "@/lib/estimate";
 
 export type Lead = { name: string; whatsapp: string; location: string };
 export type WhatsAppInput = { lead: Lead; locale: "id" | "en"; estimate?: EstimatorInput; otherBuildingType?: boolean };
 export const whatsappNumber = pricing.waPhoneE164Digits;
 export const displayWhatsAppNumber = `0${whatsappNumber.slice(2)}`;
+export const consultationAdmins = [
+  { id: "admin1", phone: whatsappNumber, displayPhone: displayWhatsAppNumber },
+  { id: "admin2", phone: contact.admin2PhoneE164Digits, displayPhone: contact.admin2DisplayPhone },
+] as const;
+export type ConsultationAdminId = (typeof consultationAdmins)[number]["id"];
 
-export function buildGeneralWhatsAppUrl(locale: "id" | "en") {
+function consultationPhone(adminId: ConsultationAdminId) {
+  return consultationAdmins.find((admin) => admin.id === adminId)!.phone;
+}
+
+export function buildGeneralWhatsAppUrl(locale: "id" | "en", adminId: ConsultationAdminId = "admin1") {
   const message = locale === "id" ? "Halo DIRWANA ARCHITECT, saya ingin konsultasi proyek." : "Hello DIRWANA ARCHITECT, I would like to discuss a project.";
-  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${consultationPhone(adminId)}?text=${encodeURIComponent(message)}`;
 }
 
 function clean(value: string) {
@@ -53,6 +63,10 @@ export function buildWhatsAppMessage({ lead, locale, estimate, otherBuildingType
         const count = counts[room.key] ?? 0;
         if (count > 0) lines.push(`- ${count} × ${id ? room.labelID : room.labelEN}${room.pricingClass !== "indoor" ? ` (${id ? "estimasi terpisah" : "separate estimate"})` : ""}`);
       });
+      const extras = estimate.extraAreas?.[index];
+      extras?.customRooms.forEach((room) => lines.push(`- ${clean(room.name)}: ${room.area} m² (${id ? "estimasi terpisah" : "separate estimate"})`));
+      if (extras?.staircaseArea) lines.push(`- ${id ? "Area Tangga" : "Staircase Area"}: ${extras.staircaseArea} m² (${id ? "estimasi terpisah" : "separate estimate"})`);
+      if (extras?.terraceArea) lines.push(`- ${id ? "Teras" : "Terrace"}: ${extras.terraceArea} m² (${id ? "estimasi terpisah" : "separate estimate"})`);
     });
     lines.push("", `${id ? "Total perkiraan luas ruang indoor" : "Total estimated indoor room area"}: ${result.totalIndoorArea} m²`);
   }
@@ -60,6 +74,6 @@ export function buildWhatsAppMessage({ lead, locale, estimate, otherBuildingType
   return lines.join("\n");
 }
 
-export function buildWhatsAppUrl(input: WhatsAppInput) {
-  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(buildWhatsAppMessage(input))}`;
+export function buildWhatsAppUrl(input: WhatsAppInput, adminId: ConsultationAdminId = "admin1") {
+  return `https://wa.me/${consultationPhone(adminId)}?text=${encodeURIComponent(buildWhatsAppMessage(input))}`;
 }

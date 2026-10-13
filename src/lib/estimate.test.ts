@@ -34,10 +34,28 @@ describe("construction tier uses total floor count and total indoor area", () =>
     expect(result.constructionCost).toBe(78_000_000);
     expect(result.hasSeparateItems).toBe(true);
   });
+  it("records custom rooms, stairs and terraces without changing approved cost calculations", () => {
+    const input = base("rumah_tinggal", 1, [{ bedroom: 1 }]);
+    const original = calculateEstimate(input);
+    const withExtras = calculateEstimate({ ...input, extraAreas: [{
+      customRooms: [{ name: "Ruang hobi", area: 14 }], staircaseArea: 9, terraceArea: 12,
+    }] });
+    expect(withExtras.totalIndoorArea).toBe(original.totalIndoorArea);
+    expect(withExtras.constructionCost).toBe(original.constructionCost);
+    expect(withExtras.regularDesignCost).toBe(original.regularDesignCost);
+    expect(withExtras.conditionalDesignCost).toBe(original.conditionalDesignCost);
+    expect(withExtras.exceedsLand).toBe(original.exceedsLand);
+    expect(withExtras.totalCustomRoomArea).toBe(14);
+    expect(withExtras.totalStaircaseArea).toBe(9);
+    expect(withExtras.totalTerraceArea).toBe(12);
+    expect(withExtras.hasSeparateItems).toBe(true);
+  });
   it("rejects invalid dimensions and quantities", () => {
     expect(() => calculateEstimate({ ...base("villa", 1, [{}]), landWidth: 0 })).toThrow();
     expect(() => calculateEstimate({ ...base("villa", 1, [{}]), landLength: 1e308, landWidth: 2 })).toThrow();
     expect(() => calculateEstimate(base("villa", 1, [{ bedroom: -1 }]))).toThrow();
+    expect(() => calculateEstimate({ ...base("villa", 1, [{}]), extraAreas: [{ staircaseArea: -2, terraceArea: 0, customRooms: [] }] })).toThrow();
+    expect(() => calculateEstimate({ ...base("villa", 1, [{}]), extraAreas: [{ staircaseArea: 0, terraceArea: 0, customRooms: [{ name: "Ruang", area: 0 }] }] })).toThrow();
   });
   it.each([
     ["kos_ruko", 1, 5_000_000], ["kos_ruko", 2, 6_500_000], ["kos_ruko", 3, 7_000_000],

@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, MoveUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Check, MoveUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { PortfolioCard } from "@/components/portfolio-card";
 import { getDictionary, isLocale } from "@/i18n";
 import { pageMetadata } from "@/lib/metadata";
 import { projects } from "@/lib/projects";
-import { buildGeneralWhatsAppUrl } from "@/lib/whatsapp";
+import { buildGeneralWhatsAppUrl, consultationAdmins } from "@/lib/whatsapp";
 
 type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> { const { locale } = await params; return isLocale(locale) ? pageMetadata(locale, "home") : {}; }
@@ -21,7 +21,7 @@ export default async function HomePage({ params }: Props) {
     <section className="hero-home">
       <Image src="/images/portfolio/villa/mr-leo-apple-orchard-01.jpg" alt={t.home.heroImageAlt} fill priority sizes="100vw" className="hero-image"/>
       <div className="hero-shade"/>
-      <div className="site-container hero-content"><p className="eyebrow light">{t.home.eyebrow}</p><h1>{t.home.title}</h1><p>{t.home.intro}</p><div className="hero-actions"><Link className="button button-bronze" href={`/${locale}/kalkulator`}>{t.common.estimate}<ArrowUpRight size={18}/></Link><a className="button button-outline-light" href={buildGeneralWhatsAppUrl(locale)} target="_blank" rel="noopener noreferrer">{t.common.consult}<ArrowRight size={18}/></a></div></div>
+      <div className="site-container hero-content"><p className="eyebrow light">{t.home.eyebrow}</p><h1>{t.home.title}</h1><p>{t.home.intro}</p><div className="hero-actions"><Link className="button button-bronze" href={`/${locale}/kalkulator`}>{t.common.estimate}<ArrowUpRight size={18}/></Link><div className="consult-actions" role="group" aria-label={t.common.consult}>{consultationAdmins.map((admin) => <a key={admin.id} className="button button-outline-light" href={buildGeneralWhatsAppUrl(locale, admin.id)} target="_blank" rel="noopener noreferrer">WhatsApp · {t.common[admin.id]} <ArrowUpRight size={18}/></a>)}</div></div></div>
       <div className="site-container hero-bottom"><span><ArrowDown size={15}/>{t.home.scroll}</span><span>{t.home.imageCaption}</span></div>
     </section>
 
@@ -37,6 +37,6 @@ export default async function HomePage({ params }: Props) {
 
     <section className="site-section faq-section"><div className="site-container faq-grid"><div><p className="eyebrow">{t.home.faqEyebrow}</p><h2>{t.home.faqTitle}</h2></div><div>{t.home.faqs.map((faq) => <details key={faq.q}><summary>{faq.q}<span>+</span></summary><p>{faq.a}</p></details>)}</div></div></section>
 
-    <section className="cta-band"><div className="site-container"><p className="eyebrow light">DIRWANA ARCHITECT</p><h2>{t.home.ctaTitle}</h2><p>{t.home.ctaText}</p><div className="cta-actions"><Link href={`/${locale}/kalkulator`} className="button button-bronze">{t.common.estimate}<ArrowUpRight size={17}/></Link><a href={buildGeneralWhatsAppUrl(locale)} target="_blank" rel="noopener noreferrer" className="button button-outline-light">{t.common.consult}<ArrowUpRight size={17}/></a></div></div></section>
+    <section className="cta-band"><div className="site-container"><p className="eyebrow light">DIRWANA ARCHITECT</p><h2>{t.home.ctaTitle}</h2><p>{t.home.ctaText}</p><div className="cta-actions"><Link href={`/${locale}/kalkulator`} className="button button-bronze">{t.common.estimate}<ArrowUpRight size={17}/></Link><div className="consult-actions" role="group" aria-label={t.common.consult}>{consultationAdmins.map((admin) => <a key={admin.id} href={buildGeneralWhatsAppUrl(locale, admin.id)} target="_blank" rel="noopener noreferrer" className="button button-outline-light">WhatsApp · {t.common[admin.id]} <ArrowUpRight size={17}/></a>)}</div></div></div></section>
   </>;
 }

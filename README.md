@@ -24,14 +24,15 @@ npm run build
 - `src/components/`: navigasi, portofolio, dan kalkulator interaktif.
 - `src/i18n/index.ts`: teks antarmuka ID/EN.
 - `src/lib/`: logika harga, WhatsApp, proyek, metadata, dan test.
-- `src/config/pricing.json`: satu-satunya sumber tarif, diskon bersyarat, dan nomor WhatsApp.
-- `src/config/room-presets.example.json`: **ukuran ruang contoh sementara**; perlu validasi arsitek. Sirkulasi dan tangga belum memiliki nilai resmi sehingga tidak dihitung.
+- `src/config/pricing.json`: sumber tarif, diskon bersyarat, dan nomor WhatsApp Admin 1.
+- `src/config/contact.json`: nomor WhatsApp Admin 2 dan akun Instagram.
+- `src/config/room-presets.example.json`: **ukuran ruang contoh sementara**; perlu validasi arsitek. Sirkulasi belum memiliki nilai resmi sehingga tidak dihitung.
 - `content/projects.json` dan `content/image-manifest.json`: data 15 proyek dan indeks 61 foto portofolio dari PDF klien.
 - `public/images/portfolio/`: foto proyek asli. `content/portfolio-contact-sheet.jpg` adalah lembar tinjau internal untuk memilih foto sebelum publikasi.
 - `public/branding/`: logo dan favicon konsep sementara, belum disetujui klien.
 - `docs/`: asal data, catatan persetujuan sebelum live, dan gambar referensi internal yang tidak ditampilkan di website.
 
-Kalkulator menggunakan total luas ruang indoor seluruh lantai dikali **satu tarif** sesuai jenis bangunan dan jumlah lantai total. Luas tersebut adalah perkiraan kebutuhan ruang, belum luas bangunan final atau pemeriksaan perizinan. Taman, kolam, dan balkon memerlukan estimasi terpisah. Diskon desain 50% hanya berlaku jika konstruksi dikerjakan DIRWANA. Pesan WhatsApp memuat kebutuhan proyek tanpa nominal biaya dan baru terkirim setelah pengunjung menekan Kirim di WhatsApp.
+Kalkulator menggunakan total luas ruang indoor preset seluruh lantai dikali **satu tarif** sesuai jenis bangunan dan jumlah lantai total. Luas tersebut adalah perkiraan kebutuhan ruang, belum luas bangunan final atau pemeriksaan perizinan. Ruang tambahan dengan luas sendiri, Area Tangga, dan Teras hanya dicatat untuk konsultasi; tidak mengubah perhitungan biaya. Taman, kolam, dan balkon juga memerlukan estimasi terpisah. Diskon desain 50% hanya berlaku jika konstruksi dikerjakan DIRWANA. Pengunjung memilih Admin 1 atau Admin 2; pesan WhatsApp memuat kebutuhan proyek tanpa nominal biaya dan baru terkirim setelah pengunjung menekan Kirim di WhatsApp.
 
 ## Sebelum publikasi
 

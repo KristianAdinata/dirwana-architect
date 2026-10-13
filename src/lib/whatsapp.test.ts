@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildWhatsAppMessage, buildWhatsAppUrl, validateLead } from "./whatsapp";
+import { buildGeneralWhatsAppUrl, buildWhatsAppMessage, buildWhatsAppUrl, validateLead } from "./whatsapp";
 
 describe("WhatsApp consultation", () => {
   const lead = { name: "Ayu", whatsapp: "0812 3456 7890", location: "Denpasar" };
@@ -33,5 +33,19 @@ describe("WhatsApp consultation", () => {
     expect(message).toContain("Floor 2 — 0 m² estimated indoor rooms");
     expect(message).toContain("1 × Bedroom");
     expect(message).not.toMatch(/Rp|IDR|price|cost|discount|\d[.,]000[.,]000/i);
+  });
+  it("offers both admins and includes manual areas without a price", () => {
+    const input = { lead, locale: "id" as const, estimate: {
+      buildingType: "rumah_tinggal" as const, landLength: 10, landWidth: 20, floorCount: 1 as const,
+      floors: [{ bedroom: 1 }], extraAreas: [{ customRooms: [{ name: "Ruang hobi", area: 14 }], staircaseArea: 9, terraceArea: 12 }],
+    } };
+    const message = buildWhatsAppMessage(input);
+    expect(message).toContain("Ruang hobi: 14 m² (estimasi terpisah)");
+    expect(message).toContain("Area Tangga: 9 m² (estimasi terpisah)");
+    expect(message).toContain("Teras: 12 m² (estimasi terpisah)");
+    expect(message).not.toMatch(/\bRp\.?\s*\d|\bIDR\b|biaya|tarif|\d[.,]000[.,]000/i);
+    expect(buildWhatsAppUrl(input, "admin1")).toMatch(/^https:\/\/wa\.me\/6281237489756\?text=/);
+    expect(buildWhatsAppUrl(input, "admin2")).toMatch(/^https:\/\/wa\.me\/6285961509075\?text=/);
+    expect(buildGeneralWhatsAppUrl("en", "admin2")).toMatch(/^https:\/\/wa\.me\/6285961509075\?text=/);
   });
 });
