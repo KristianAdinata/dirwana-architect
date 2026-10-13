@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { PortfolioCard } from "@/components/portfolio-card";
 import { getDictionary, isLocale } from "@/i18n";
 import { projects, projectDescription } from "@/lib/projects";
+import { siteUrl } from "@/lib/site-url";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 export function generateStaticParams() { return projects.flatMap((project) => ["id", "en"].map((locale) => ({ locale, slug: project.slug }))); }
@@ -13,8 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const project = projects.find((item) => item.slug === slug);
   if (!isLocale(locale) || !project) return {};
-  const site = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-  return { title: project.title, description: projectDescription(project, locale), openGraph: { title: project.title, description: projectDescription(project, locale), ...(site ? { images: [{ url: `${site}${project.images[0]}`, alt: project.title }] } : {}) }, ...(site ? { alternates: { canonical: `${site}/${locale}/portofolio/${slug}`, languages: { "id-ID": `${site}/id/portofolio/${slug}`, "en-US": `${site}/en/portofolio/${slug}` } } } : {}) };
+  return { title: project.title, description: projectDescription(project, locale), openGraph: { title: project.title, description: projectDescription(project, locale), images: [{ url: `${siteUrl}${project.images[0]}`, alt: project.title }] }, alternates: { canonical: `${siteUrl}/${locale}/portofolio/${slug}`, languages: { "id-ID": `${siteUrl}/id/portofolio/${slug}`, "en-US": `${siteUrl}/en/portofolio/${slug}` } } };
 }
 export default async function ProjectPage({ params }: Props) {
   const { locale, slug } = await params;

@@ -39,6 +39,6 @@ Kalkulator menjumlahkan luas ruang dalam preset dan ruang tambahan dengan luas y
 - Minta persetujuan logo, pemilihan proyek, hak penggunaan foto, dan foto resolusi tinggi. Sumber foto adalah PDF portofolio klien; sebagian gambar berupa rendering atau progres, dan satu foto Berawa Villa memiliki watermark.
 - Validasi ukuran ruang, cakupan tarif konstruksi, tanggal berlaku tarif, area layanan, serta komponen yang dicatat terpisah seperti tangga, teras, taman, kolam, dan balkon. Jangan menganggap kalkulator sebagai RAB atau pemeriksaan KDB/KLB.
 - Tinjau terjemahan English, nama dan status proyek, serta data kontak sebelum tayang.
-- Tentukan domain/hosting dan isi `NEXT_PUBLIC_SITE_URL` (lihat `.env.example`) agar canonical URL dan sitemap memakai domain produksi. Tanpa nilai tersebut, sitemap kosong.
+- Saat memakai domain sendiri, isi `NEXT_PUBLIC_SITE_URL` (lihat `.env.example`) agar canonical URL dan sitemap memakai domain tersebut. Tanpa nilai ini, website memakai `https://dirwana-architect.vercel.app`.
 
 Konten perusahaan mengikuti PDF portofolio dan keterangan klien. PDF memakai nama lama DIRWANA RANCANG-BANGUN; website memakai branding yang diminta klien, DIRWANA ARCHITECT — DESIGN & BUILD. Situs versi ini tidak menyimpan data lead; kalkulator hanya menyimpan pilihan proyek di perangkat pengunjung, tanpa nama, nomor WhatsApp, atau lokasi proyek.

@@ -3,12 +3,14 @@ import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { isLocale, locales } from "@/i18n";
+import { siteUrl } from "@/lib/site-url";
 import "../globals.css";
 
 export const metadata: Metadata = {
   title: { default: "DIRWANA ARCHITECT — DESIGN & BUILD", template: "%s | DIRWANA ARCHITECT" },
   icons: { icon: "/branding/favicon-concept.svg" },
-  metadataBase: process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL) : undefined,
+  metadataBase: new URL(siteUrl),
+  verification: { google: "OYWCAAPuc5-A6_xphNGdNuNDX1M_tHf6SBuLCZ1ozzg" },
 };
 
 export function generateStaticParams() { return locales.map((locale) => ({ locale })); }
