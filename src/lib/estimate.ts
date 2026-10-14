@@ -14,9 +14,10 @@ export type EstimatorInput = {
   landWidth: number;
   floorCount: FloorCount;
   floors: RoomCounts[];
+  presetAreas?: Record<string, number>[];
   extraAreas?: FloorExtraAreas[];
 };
-// Room sizes remain provisional; the per-floor corridor allowance follows client direction.
+// Preset areas are DIRWANA's estimates; visitors may replace each selected total area.
 export const roomPresets = presetData.roomSizes as RoomPreset[];
 export const circulationReservePctByFloor = presetData.circulationReservePctByFloor;
 const roundArea = (area: number) => Math.round((area + Number.EPSILON) * 100) / 100;
@@ -33,6 +34,7 @@ export function calculateEstimate(input: EstimatorInput) {
   }
   const floors = Array.from({ length: input.floorCount }, (_, index) => {
     const counts = input.floors[index] ?? {};
+    const presetAreas = input.presetAreas?.[index] ?? {};
     const extras = input.extraAreas?.[index] ?? { staircaseArea: 0, terraceArea: 0, customRooms: [] };
     for (const quantity of Object.values(counts)) {
       if (!Number.isInteger(quantity) || quantity < 0) throw new Error("Room quantities must be nonnegative integers");
@@ -41,8 +43,13 @@ export function calculateEstimate(input: EstimatorInput) {
     for (const room of extras.customRooms) {
       if (!room.name.trim() || !Number.isFinite(room.area) || room.area <= 0) throw new Error("Custom rooms need a name and positive area");
     }
+    for (const [key, area] of Object.entries(presetAreas)) {
+      if (!roomPresets.some((room) => room.key === key) || !Number.isFinite(area) || area <= 0 || (counts[key] ?? 0) < 1) {
+        throw new Error("Selected preset areas must be positive and belong to a selected room");
+      }
+    }
     const areaOf = (pricingClass: RoomClass) => roomPresets.reduce((area, room) =>
-      area + (room.pricingClass === pricingClass ? room.area * (counts[room.key] ?? 0) : 0), 0);
+      area + (room.pricingClass === pricingClass && (counts[room.key] ?? 0) > 0 ? presetAreas[room.key] ?? room.area * counts[room.key] : 0), 0);
     const customRoomArea = roundArea(extras.customRooms.reduce((area, room) => area + room.area, 0));
     const baseIndoorArea = roundArea(areaOf("indoor") + customRoomArea);
     const circulationPct = circulationReservePctByFloor[index];

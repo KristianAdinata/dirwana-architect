@@ -16,9 +16,9 @@
 - Output biaya desain dan bangun di situs, tapi WhatsApp hanya ringkasan kebutuhan ruang TANPA harga.
 - Nama, WA, lokasi proyek wajib diisi sebelum buka WA ke nomor 081237489756.
 - Dua bahasa, desain khas DIRWANA (referensi Emporio), logo baru; dashboard dan data leads untuk fase mendatang.
+- Nilai luas standar ruangan pada `src/config/room-presets.example.json` awalnya dibuat untuk prototipe; klien kemudian menyetujui nilainya sebagai **estimasi luas DIRWANA**, bukan ukuran final bangunan.
 
 ## Asumsi buatan untuk prototipe, BUKAN data klien
-- Nilai luas standar ruangan pada `src/config/room-presets.example.json`.
 - Palet visual charcoal/ivory/bronze dan contoh logo SVG.
 - Rekomendasi Next.js + React + TypeScript + Tailwind.
 - Cara teknis memodelkan luasan area khusus, validasi, tes, dan struktur aplikasi.

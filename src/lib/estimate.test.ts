@@ -38,6 +38,20 @@ describe("construction tier uses total floor count and calculated indoor area", 
     expect(result.constructionCost).toBe(81_900_000);
     expect(result.hasSeparateItems).toBe(true);
   });
+  it("uses entered total preset areas per floor without multiplying by room count again", () => {
+    const result = calculateEstimate({ ...base("rumah_tinggal", 2, [
+      { bedroom: 2, garden: 1, balcony: 1 },
+      { storage: 2 },
+    ]), presetAreas: [{ bedroom: 30, garden: 40, balcony: 12 }, { storage: 16 }] });
+    expect(result.floors.map((floor) => floor.baseIndoorArea)).toEqual([30, 16]);
+    expect(result.floors.map((floor) => floor.circulationArea)).toEqual([1.5, 0.8]);
+    expect(result.floors[0].outdoorArea).toBe(40);
+    expect(result.floors[0].specialArea).toBe(12);
+    expect(result.totalIndoorArea).toBe(48.3);
+    expect(result.constructionCost).toBe(338_100_000);
+    expect(result.regularDesignCost).toBe(4_830_000);
+    expect(result.conditionalDesignCost).toBe(2_415_000);
+  });
   it("prices custom indoor rooms while keeping stairs and terraces separate", () => {
     const input = base("rumah_tinggal", 1, [{ bedroom: 1 }]);
     const original = calculateEstimate(input);
@@ -66,6 +80,9 @@ describe("construction tier uses total floor count and calculated indoor area", 
     expect(() => calculateEstimate(base("villa", 1, [{ bedroom: -1 }]))).toThrow();
     expect(() => calculateEstimate({ ...base("villa", 1, [{}]), extraAreas: [{ staircaseArea: -2, terraceArea: 0, customRooms: [] }] })).toThrow();
     expect(() => calculateEstimate({ ...base("villa", 1, [{}]), extraAreas: [{ staircaseArea: 0, terraceArea: 0, customRooms: [{ name: "Ruang", area: 0 }] }] })).toThrow();
+    expect(() => calculateEstimate({ ...base("villa", 1, [{ bedroom: 1 }]), presetAreas: [{ bedroom: 0 }] })).toThrow();
+    expect(() => calculateEstimate({ ...base("villa", 1, [{ bedroom: 1 }]), presetAreas: [{ bedroom: Infinity }] })).toThrow();
+    expect(() => calculateEstimate({ ...base("villa", 1, [{}]), presetAreas: [{ bedroom: 20 }] })).toThrow();
   });
   it.each([
     ["kos_ruko", 1, 5_000_000], ["kos_ruko", 2, 6_500_000], ["kos_ruko", 3, 7_000_000],

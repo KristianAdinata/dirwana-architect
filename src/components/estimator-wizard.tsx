@@ -8,9 +8,9 @@ import { buildWhatsAppUrl, consultationAdmins, validateLead, type Lead } from "@
 
 type CustomRoomDraft = { id: string; name: string; area: string };
 type FloorExtrasDraft = { staircaseArea: string; terraceArea: string; customRooms: CustomRoomDraft[] };
-type WizardState = { buildingType: BuildingType | "other"; landLength: string; landWidth: string; floorCount: FloorCount; floors: RoomCounts[]; extraAreas: FloorExtrasDraft[]; step: 1 | 2 | 3; activeFloor: number };
+type WizardState = { buildingType: BuildingType | "other"; landLength: string; landWidth: string; floorCount: FloorCount; floors: RoomCounts[]; presetAreas: Record<string, string>[]; extraAreas: FloorExtrasDraft[]; step: 1 | 2 | 3; activeFloor: number };
 const emptyExtras = (): FloorExtrasDraft => ({ staircaseArea: "", terraceArea: "", customRooms: [] });
-const initialState: WizardState = { buildingType: "rumah_tinggal", landLength: "", landWidth: "", floorCount: 1, floors: [{}, {}, {}], extraAreas: [emptyExtras(), emptyExtras(), emptyExtras()], step: 1, activeFloor: 0 };
+const initialState: WizardState = { buildingType: "rumah_tinggal", landLength: "", landWidth: "", floorCount: 1, floors: [{}, {}, {}], presetAreas: [{}, {}, {}], extraAreas: [emptyExtras(), emptyExtras(), emptyExtras()], step: 1, activeFloor: 0 };
 const storageKey = "dirwana-estimator-v1";
 
 function validLandDimensions(length: number, width: number) {
@@ -19,18 +19,22 @@ function validLandDimensions(length: number, width: number) {
 
 const validOptionalArea = (value: string) => value === "" || (Number.isFinite(Number(value)) && Number(value) >= 0);
 const validRequiredArea = (value: string) => value.trim() !== "" && Number.isFinite(Number(value)) && Number(value) > 0;
-function invalidExtraFloor(state: WizardState) {
-  return state.extraAreas.slice(0, state.floorCount).findIndex((floor) =>
-    !validOptionalArea(floor.staircaseArea) || !validOptionalArea(floor.terraceArea) || floor.customRooms.some((room) => room.name.trim().length < 2 || !validRequiredArea(room.area)));
+function invalidAreaFloor(state: WizardState) {
+  return state.extraAreas.slice(0, state.floorCount).findIndex((floor, index) =>
+    !validOptionalArea(floor.staircaseArea) || !validOptionalArea(floor.terraceArea) || floor.customRooms.some((room) => room.name.trim().length < 2 || !validRequiredArea(room.area)) ||
+    Object.entries(state.presetAreas[index] ?? {}).some(([key, area]) => (state.floors[index]?.[key] ?? 0) > 0 && !validRequiredArea(area)));
 }
-const validExtraAreas = (state: WizardState) => invalidExtraFloor(state) === -1;
+const validAreas = (state: WizardState) => invalidAreaFloor(state) === -1;
 
 function toInput(state: WizardState): EstimatorInput | null {
   if (state.buildingType === "other") return null;
   const landLength = Number(state.landLength);
   const landWidth = Number(state.landWidth);
-  if (!validLandDimensions(landLength, landWidth) || !validExtraAreas(state)) return null;
-  return { buildingType: state.buildingType, landLength, landWidth, floorCount: state.floorCount, floors: state.floors.slice(0, state.floorCount), extraAreas: state.extraAreas.slice(0, state.floorCount).map((floor) => ({
+  if (!validLandDimensions(landLength, landWidth) || !validAreas(state)) return null;
+  const presetAreas = state.presetAreas.slice(0, state.floorCount).map((areas, index) => Object.fromEntries(
+    Object.entries(areas).filter(([key]) => (state.floors[index]?.[key] ?? 0) > 0).map(([key, area]) => [key, Number(area)]),
+  ));
+  return { buildingType: state.buildingType, landLength, landWidth, floorCount: state.floorCount, floors: state.floors.slice(0, state.floorCount), presetAreas, extraAreas: state.extraAreas.slice(0, state.floorCount).map((floor) => ({
     staircaseArea: Number(floor.staircaseArea), terraceArea: Number(floor.terraceArea), customRooms: floor.customRooms.map((room) => ({ name: room.name.trim(), area: Number(room.area) })),
   })) };
 }
@@ -58,6 +62,10 @@ export function EstimatorWizard({ locale }: { locale: Locale }) {
               const quantity = Number(parsed.floors?.[index]?.[room.key]);
               return [room.key, Number.isInteger(quantity) && quantity >= 0 && quantity <= 99 ? quantity : 0];
             })));
+            const presetAreas = Array.from({ length: 3 }, (_, index) => Object.fromEntries(roomPresets.flatMap((room) => {
+              const area = parsed.presetAreas?.[index]?.[room.key];
+              return floors[index][room.key] > 0 && typeof area === "string" && validRequiredArea(area) ? [[room.key, area]] : [];
+            })));
             const extraAreas = Array.from({ length: 3 }, (_, index) => {
               const extra = parsed.extraAreas?.[index];
               const storedRooms = Array.isArray(extra?.customRooms) ? extra.customRooms.slice(0, 20) : [];
@@ -74,6 +82,7 @@ export function EstimatorWizard({ locale }: { locale: Locale }) {
               landWidth: String(parsed.landWidth ?? ""),
               floorCount: floorCount as FloorCount,
               floors,
+              presetAreas,
               extraAreas,
               step: step as WizardState["step"],
               activeFloor: Number.isInteger(Number(parsed.activeFloor)) ? Math.min(Math.max(Number(parsed.activeFloor), 0), floorCount - 1) : 0,
@@ -90,7 +99,7 @@ export function EstimatorWizard({ locale }: { locale: Locale }) {
   function update(patch: Partial<WizardState>) { setState((current) => ({ ...current, ...patch })); }
   function next() {
     if (state.step === 1 && state.buildingType !== "other" && landInvalid) { setShowLandError(true); return; }
-    const invalidFloor = invalidExtraFloor(state);
+    const invalidFloor = invalidAreaFloor(state);
     if (state.step === 2 && invalidFloor !== -1) { setShowExtraError(true); update({ activeFloor: invalidFloor }); return; }
     setShowLandError(false);
     setShowExtraError(false);
@@ -102,8 +111,24 @@ export function EstimatorWizard({ locale }: { locale: Locale }) {
     setState((current) => {
       const floors = current.floors.map((floor) => ({ ...floor }));
       floors[current.activeFloor][key] = Math.min(99, Math.max(0, (floors[current.activeFloor][key] ?? 0) + delta));
-      return { ...current, floors };
+      const presetAreas = current.presetAreas.map((areas) => ({ ...areas }));
+      if (floors[current.activeFloor][key] === 0) delete presetAreas[current.activeFloor][key];
+      return { ...current, floors, presetAreas };
     });
+  }
+  function changePresetMode(room: RoomPreset, custom: boolean) {
+    setState((current) => {
+      const presetAreas = current.presetAreas.map((areas) => ({ ...areas }));
+      if (custom) {
+        if (presetAreas[current.activeFloor][room.key] === undefined) {
+          presetAreas[current.activeFloor][room.key] = String(room.area * (current.floors[current.activeFloor][room.key] ?? 0));
+        }
+      } else delete presetAreas[current.activeFloor][room.key];
+      return { ...current, presetAreas };
+    });
+  }
+  function changePresetArea(key: string, area: string) {
+    setState((current) => ({ ...current, presetAreas: current.presetAreas.map((areas, index) => index === current.activeFloor ? { ...areas, [key]: area } : areas) }));
   }
   function changeExtraArea(field: "staircaseArea" | "terraceArea", value: string) {
     setState((current) => ({ ...current, extraAreas: current.extraAreas.map((extra, index) => index === current.activeFloor ? { ...extra, [field]: value } : extra) }));
@@ -151,7 +176,7 @@ export function EstimatorWizard({ locale }: { locale: Locale }) {
         </div>}
         {state.step === 2 && <div className="wizard-panel">
           <div className="step-heading"><span>{t.calc.step} 02 {t.calc.of} 03</span><h2>{t.calc.roomTitle}</h2><p>{t.calc.roomIntro}</p></div>
-          <FloorEditor locale={locale} state={state} estimate={estimate} onFloorChange={(floor) => update({ activeFloor: floor })} onRoomChange={changeRoom} onExtraAreaChange={changeExtraArea} onAddCustomRoom={addCustomRoom} onCustomRoomChange={changeCustomRoom} onRemoveCustomRoom={removeCustomRoom} showExtraError={showExtraError}/>
+          <FloorEditor locale={locale} state={state} estimate={estimate} onFloorChange={(floor) => update({ activeFloor: floor })} onRoomChange={changeRoom} onPresetModeChange={changePresetMode} onPresetAreaChange={changePresetArea} onExtraAreaChange={changeExtraArea} onAddCustomRoom={addCustomRoom} onCustomRoomChange={changeCustomRoom} onRemoveCustomRoom={removeCustomRoom} showExtraError={showExtraError}/>
           {showExtraError && <p className="form-error" role="alert">{t.calc.manualAreaInvalid}</p>}
           <p className="draft-note">{t.calc.draftPreset}</p>
           <div className="wizard-actions split"><button type="button" className="button button-plain" onClick={previous}><ArrowLeft size={17}/>{t.common.previous}</button><button type="button" className="button button-dark" onClick={next}>{t.common.next}<ArrowRight size={17}/></button></div>
@@ -168,7 +193,7 @@ export function EstimatorWizard({ locale }: { locale: Locale }) {
   </section>;
 }
 
-function FloorEditor({ locale, state, estimate, onFloorChange, onRoomChange, onExtraAreaChange, onAddCustomRoom, onCustomRoomChange, onRemoveCustomRoom, showExtraError }: { locale: Locale; state: WizardState; estimate: ReturnType<typeof calculateEstimate> | null; onFloorChange: (floor: number) => void; onRoomChange: (key: string, delta: number) => void; onExtraAreaChange: (field: "staircaseArea" | "terraceArea", value: string) => void; onAddCustomRoom: () => void; onCustomRoomChange: (id: string, field: "name" | "area", value: string) => void; onRemoveCustomRoom: (id: string) => void; showExtraError: boolean }) {
+function FloorEditor({ locale, state, estimate, onFloorChange, onRoomChange, onPresetModeChange, onPresetAreaChange, onExtraAreaChange, onAddCustomRoom, onCustomRoomChange, onRemoveCustomRoom, showExtraError }: { locale: Locale; state: WizardState; estimate: ReturnType<typeof calculateEstimate> | null; onFloorChange: (floor: number) => void; onRoomChange: (key: string, delta: number) => void; onPresetModeChange: (room: RoomPreset, custom: boolean) => void; onPresetAreaChange: (key: string, area: string) => void; onExtraAreaChange: (field: "staircaseArea" | "terraceArea", value: string) => void; onAddCustomRoom: () => void; onCustomRoomChange: (id: string, field: "name" | "area", value: string) => void; onRemoveCustomRoom: (id: string) => void; showExtraError: boolean }) {
   const t = getDictionary(locale);
   const extras = state.extraAreas[state.activeFloor];
   const floorEstimate = estimate?.floors[state.activeFloor];
@@ -177,7 +202,7 @@ function FloorEditor({ locale, state, estimate, onFloorChange, onRoomChange, onE
     <div className="floor-tabs" role="tablist" aria-label={t.calc.floorTitle}>{Array.from({ length: state.floorCount }, (_, index) => <button key={index} type="button" role="tab" aria-selected={state.activeFloor === index} className={state.activeFloor === index ? "active" : ""} onClick={() => onFloorChange(index)}>{t.calc.floor} {index + 1}<span>{estimate ? formatArea(estimate.floors[index].indoorArea, locale) : "0 m²"}</span></button>)}</div>
     {(["indoor", "outdoor", "special"] as const).map((category) => <div className="room-group" key={category}>
       <div className="room-group-heading"><h3>{t.calc[category]}</h3><span>{category === "indoor" ? `${roomPresets.filter((room) => room.pricingClass === category).length} ${locale === "id" ? "pilihan" : "options"}` : <ChevronDown size={15}/>}</span></div>
-      <div className="room-grid">{roomPresets.filter((room) => room.pricingClass === category).map((room) => <RoomPicker key={room.key} room={room} locale={locale} count={state.floors[state.activeFloor]?.[room.key] ?? 0} onChange={(delta) => onRoomChange(room.key, delta)}/>)}</div>
+      <div className="room-grid">{roomPresets.filter((room) => room.pricingClass === category).map((room) => <RoomPicker key={room.key} room={room} locale={locale} count={state.floors[state.activeFloor]?.[room.key] ?? 0} customArea={state.presetAreas[state.activeFloor]?.[room.key]} invalid={showExtraError && state.presetAreas[state.activeFloor]?.[room.key] !== undefined && !validRequiredArea(state.presetAreas[state.activeFloor][room.key])} onChange={(delta) => onRoomChange(room.key, delta)} onModeChange={(custom) => onPresetModeChange(room, custom)} onAreaChange={(area) => onPresetAreaChange(room.key, area)}/>)}</div>
       {category === "outdoor" && <ManualAreaCard label={t.calc.terrace} help={t.calc.separateAreaHelp} areaLabel={t.calc.manualArea} value={extras.terraceArea} invalid={showExtraError && !validOptionalArea(extras.terraceArea)} onChange={(value) => onExtraAreaChange("terraceArea", value)}/>}
       {category === "special" && <ManualAreaCard label={t.calc.staircase} help={t.calc.separateAreaHelp} areaLabel={t.calc.manualArea} value={extras.staircaseArea} invalid={showExtraError && !validOptionalArea(extras.staircaseArea)} onChange={(value) => onExtraAreaChange("staircaseArea", value)}/>}
       {category === "indoor" && <div className="custom-room-section">
@@ -203,12 +228,16 @@ function ManualAreaCard({ label, help, areaLabel, value, invalid, onChange }: { 
   return <div className={`manual-area-card ${value ? "chosen" : ""}`}><div className="room-card-info"><strong>{label}</strong><small>{help}</small></div><label className="field"><span>{areaLabel}</span><input type="number" inputMode="decimal" min="0.1" step="any" value={value} placeholder="0" onChange={(event) => onChange(event.target.value)} aria-invalid={invalid}/></label></div>;
 }
 
-function RoomPicker({ room, locale, count, onChange }: { room: RoomPreset; locale: Locale; count: number; onChange: (delta: number) => void }) {
+function RoomPicker({ room, locale, count, customArea, invalid, onChange, onModeChange, onAreaChange }: { room: RoomPreset; locale: Locale; count: number; customArea?: string; invalid: boolean; onChange: (delta: number) => void; onModeChange: (custom: boolean) => void; onAreaChange: (area: string) => void }) {
   const t = getDictionary(locale);
   const label = locale === "id" ? room.labelID : room.labelEN;
   return <div className={`room-card ${count > 0 ? "chosen" : ""}`}>
-    <div className="room-card-info"><strong>{label}</strong><small>±{room.area} m² · {t.calc.approxSize}</small></div>
-    <div className="quantity-control"><button type="button" aria-label={`${t.calc.remove} ${label}`} onClick={() => onChange(-1)} disabled={count === 0}><Minus size={16}/></button><output aria-live="polite" aria-label={`${label}: ${count}`}>{count}</output><button type="button" aria-label={`${t.calc.add} ${label}`} onClick={() => onChange(1)} disabled={count >= 99}><Plus size={16}/></button></div>
+    <div className="room-card-main"><div className="room-card-info"><strong>{label}</strong><small>±{room.area} m² · {t.calc.approxSize}</small></div>
+      <div className="quantity-control"><button type="button" aria-label={`${t.calc.remove} ${label}`} onClick={() => onChange(-1)} disabled={count === 0}><Minus size={16}/></button><output aria-live="polite" aria-label={`${label}: ${count}`}>{count}</output><button type="button" aria-label={`${t.calc.add} ${label}`} onClick={() => onChange(1)} disabled={count >= 99}><Plus size={16}/></button></div></div>
+    {count > 0 && <><div className="room-area-choice" role="group" aria-label={`${t.calc.areaChoice} ${label}`}>
+      <button type="button" className={customArea === undefined ? "active" : ""} aria-pressed={customArea === undefined} onClick={() => onModeChange(false)}>{t.calc.useEstimatedArea}<small>{formatArea(room.area * count, locale)}</small></button>
+      <button type="button" className={customArea !== undefined ? "active" : ""} aria-pressed={customArea !== undefined} onClick={() => onModeChange(true)}>{t.calc.useCustomArea}</button>
+    </div>{customArea !== undefined && <label className="field room-custom-area"><span>{t.calc.totalPresetArea} {count} × {label} (m²)</span><input type="number" inputMode="decimal" min="0.01" step="any" value={customArea} onChange={(event) => onAreaChange(event.target.value)} aria-invalid={invalid} required/>{invalid && <small className="form-error">{t.calc.presetAreaInvalid}</small>}{room.pricingClass !== "indoor" && <small>{t.calc.separateAreaHelp}</small>}</label>}</>}
   </div>;
 }
 

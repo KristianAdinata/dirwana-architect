@@ -26,13 +26,13 @@ npm run build
 - `src/lib/`: logika harga, WhatsApp, proyek, metadata, dan test.
 - `src/config/pricing.json`: sumber tarif, diskon bersyarat, dan nomor WhatsApp Admin 1.
 - `src/config/contact.json`: nomor WhatsApp Admin 2, Instagram, email, dan tautan Google Maps.
-- `src/config/room-presets.example.json`: **ukuran ruang contoh sementara** dan persentase tambahan koridor/ruang sisa per lantai.
+- `src/config/room-presets.example.json`: estimasi luas ruang bawaan DIRWANA dan persentase tambahan koridor/ruang sisa per lantai.
 - `content/projects.json` dan `content/image-manifest.json`: data 15 proyek dan indeks 61 foto portofolio dari PDF klien.
 - `public/images/portfolio/`: foto proyek asli. `content/portfolio-contact-sheet.jpg` adalah lembar tinjau internal untuk memilih foto sebelum publikasi.
 - `public/branding/`: logo dan favicon konsep sementara, belum disetujui klien.
 - `docs/`: asal data, catatan persetujuan sebelum live, dan gambar referensi internal yang tidak ditampilkan di website.
 
-Kalkulator menjumlahkan luas ruang dalam preset dan ruang tambahan dengan luas yang diisi pengunjung per lantai. Tambahan otomatis untuk koridor/ruang sisa adalah **5% di setiap lantai** dari jumlah tersebut. Luas terhitung seluruh lantai dikalikan **satu tarif** sesuai jenis bangunan dan jumlah lantai total. Luas tersebut adalah perkiraan kebutuhan ruang, belum luas bangunan final atau pemeriksaan perizinan. Area Tangga dan Teras dicatat terpisah tanpa mengubah estimasi biaya umum. Taman, kolam, dan balkon juga memerlukan estimasi terpisah. Diskon desain 50% hanya berlaku jika konstruksi dikerjakan DIRWANA. Pengunjung memilih Admin 1 atau Admin 2; pesan WhatsApp memuat kebutuhan proyek tanpa nominal biaya dan baru terkirim setelah pengunjung menekan Kirim di WhatsApp.
+Kalkulator menjumlahkan luas ruang dalam preset dan ruang tambahan dengan luas yang diisi pengunjung per lantai. Pengunjung dapat memakai estimasi luas DIRWANA atau mengganti total luas pilihan ruang yang sudah ada; jika jumlahnya dua, input custom adalah total keduanya. Tambahan otomatis untuk koridor/ruang sisa adalah **5% di setiap lantai** dari jumlah luas ruang dalam. Luas terhitung seluruh lantai dikalikan **satu tarif** sesuai jenis bangunan dan jumlah lantai total. Luas tersebut adalah perkiraan kebutuhan ruang, belum luas bangunan final atau pemeriksaan perizinan. Area Tangga dan Teras dicatat terpisah tanpa mengubah estimasi biaya umum. Taman, kolam, dan balkon juga memerlukan estimasi terpisah walaupun luasnya diisi sendiri. Diskon desain 50% hanya berlaku jika konstruksi dikerjakan DIRWANA. Pengunjung memilih Admin 1 atau Admin 2; pesan WhatsApp memuat kebutuhan proyek tanpa nominal biaya dan baru terkirim setelah pengunjung menekan Kirim di WhatsApp.
 
 ## Sebelum publikasi
 
