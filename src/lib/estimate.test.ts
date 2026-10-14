@@ -32,11 +32,22 @@ describe("construction tier uses total floor count and calculated indoor area", 
     expect(result.constructionCost).toBe(2_520_000_000);
     expect(result.regularDesignCost).toBe(31_500_000);
   });
-  it("excludes garden, pool and balcony from generic construction pricing", () => {
+  it("prices pool and balcony for the early estimate while keeping garden separate", () => {
     const result = calculateEstimate(base("villa", 1, [{ bedroom: 1, garden: 1, pool: 1, balcony: 1 }]));
     expect(result.totalIndoorArea).toBe(12.6);
-    expect(result.constructionCost).toBe(81_900_000);
+    expect(result.totalSpecialArea).toBe(28);
+    expect(result.totalBuildingArea).toBe(40.6);
+    expect(result.constructionCost).toBe(263_900_000);
+    expect(result.regularDesignCost).toBe(4_060_000);
+    expect(result.conditionalDesignCost).toBe(2_030_000);
     expect(result.hasSeparateItems).toBe(true);
+    const withoutGarden = calculateEstimate(base("villa", 1, [{ bedroom: 1, pool: 1, balcony: 1 }]));
+    expect(withoutGarden.constructionCost).toBe(result.constructionCost);
+    expect(withoutGarden.hasSeparateItems).toBe(false);
+    const specialsOnly = calculateEstimate(base("villa", 1, [{ pool: 1, balcony: 1 }]));
+    expect(specialsOnly.totalBuildingArea).toBe(28);
+    expect(specialsOnly.constructionCost).toBe(182_000_000);
+    expect(specialsOnly.hasSeparateItems).toBe(false);
   });
   it("uses entered total preset areas per floor without multiplying by room count again", () => {
     const result = calculateEstimate({ ...base("rumah_tinggal", 2, [
@@ -48,9 +59,10 @@ describe("construction tier uses total floor count and calculated indoor area", 
     expect(result.floors[0].outdoorArea).toBe(40);
     expect(result.floors[0].specialArea).toBe(12);
     expect(result.totalIndoorArea).toBe(48.3);
-    expect(result.constructionCost).toBe(338_100_000);
-    expect(result.regularDesignCost).toBe(4_830_000);
-    expect(result.conditionalDesignCost).toBe(2_415_000);
+    expect(result.totalBuildingArea).toBe(60.3);
+    expect(result.constructionCost).toBeCloseTo(422_100_000, 0);
+    expect(result.regularDesignCost).toBeCloseTo(6_030_000, 0);
+    expect(result.conditionalDesignCost).toBeCloseTo(3_015_000, 0);
   });
   it("prices custom rooms, stairs and terraces at the selected building rate", () => {
     const input = base("rumah_tinggal", 1, [{ bedroom: 1 }]);

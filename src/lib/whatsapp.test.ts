@@ -54,14 +54,19 @@ describe("WhatsApp consultation", () => {
     expect(buildWhatsAppUrl(input, "admin2")).toMatch(/^https:\/\/wa\.me\/6285961509075\?text=/);
     expect(buildGeneralWhatsAppUrl("en", "admin2")).toMatch(/^https:\/\/wa\.me\/6285961509075\?text=/);
   });
-  it("sends entered total preset areas while keeping outdoor items separate and prices private", () => {
+  it("includes entered pool and balcony areas while keeping garden separate and prices private", () => {
     const message = buildWhatsAppMessage({ lead, locale: "id", estimate: {
       buildingType: "villa", landLength: 20, landWidth: 20, floorCount: 1,
-      floors: [{ bedroom: 2, garden: 1 }], presetAreas: [{ bedroom: 30, garden: 40 }],
+      floors: [{ bedroom: 2, garden: 1, pool: 1, balcony: 1 }], presetAreas: [{ bedroom: 30, garden: 40, pool: 25, balcony: 10 }],
     } });
     expect(message).toContain("2 × Kamar Tidur: 30 m²");
     expect(message).toContain("1 × Taman: 40 m² (estimasi terpisah)");
+    expect(message).toContain("1 × Kolam Renang: 25 m²");
+    expect(message).toContain("1 × Balkon: 10 m²");
+    expect(message).not.toContain("Kolam Renang: 25 m² (estimasi terpisah)");
+    expect(message).not.toContain("Balkon: 10 m² (estimasi terpisah)");
     expect(message).toContain("Koridor & ruang sisa: 5% × 30 m² = 1,5 m²");
+    expect(message).toContain("Total perkiraan luas bangunan: 66,5 m²");
     expect(message).not.toMatch(/\bRp\.?\s*\d|\bIDR\b|biaya|tarif|\d[.,]000[.,]000/i);
   });
 });

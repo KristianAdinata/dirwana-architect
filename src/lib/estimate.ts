@@ -55,8 +55,9 @@ export function calculateEstimate(input: EstimatorInput) {
     const circulationPct = circulationReservePctByFloor[index];
     const circulationArea = roundArea(baseIndoorArea * circulationPct);
     const indoorArea = roundArea(baseIndoorArea + circulationArea);
-    const buildingArea = roundArea(indoorArea + extras.staircaseArea + extras.terraceArea);
-    return { baseIndoorArea, circulationPct, circulationArea, indoorArea, buildingArea, outdoorArea: areaOf("outdoor"), specialArea: areaOf("special"), customRoomArea, staircaseArea: extras.staircaseArea, terraceArea: extras.terraceArea };
+    const specialArea = roundArea(areaOf("special"));
+    const buildingArea = roundArea(indoorArea + specialArea + extras.staircaseArea + extras.terraceArea);
+    return { baseIndoorArea, circulationPct, circulationArea, indoorArea, buildingArea, outdoorArea: areaOf("outdoor"), specialArea, customRoomArea, staircaseArea: extras.staircaseArea, terraceArea: extras.terraceArea };
   });
   const totalIndoorArea = roundArea(floors.reduce((sum, floor) => sum + floor.indoorArea, 0));
   const totalBuildingArea = roundArea(floors.reduce((sum, floor) => sum + floor.buildingArea, 0));
@@ -70,6 +71,7 @@ export function calculateEstimate(input: EstimatorInput) {
     totalBuildingArea,
     totalBaseIndoorArea: roundArea(floors.reduce((sum, floor) => sum + floor.baseIndoorArea, 0)),
     totalCirculationArea: roundArea(floors.reduce((sum, floor) => sum + floor.circulationArea, 0)),
+    totalSpecialArea: roundArea(floors.reduce((sum, floor) => sum + floor.specialArea, 0)),
     totalCustomRoomArea: roundArea(floors.reduce((sum, floor) => sum + floor.customRoomArea, 0)),
     totalStaircaseArea: floors.reduce((sum, floor) => sum + floor.staircaseArea, 0),
     totalTerraceArea: floors.reduce((sum, floor) => sum + floor.terraceArea, 0),
@@ -79,7 +81,7 @@ export function calculateEstimate(input: EstimatorInput) {
     regularDesignCost,
     conditionalDesignCost: regularDesignCost * (1 - pricing.designDiscountIfConstructionWithDirwana),
     exceedsLand: floors[0].buildingArea + floors[0].outdoorArea > landArea,
-    hasSeparateItems: floors.some((floor) => floor.specialArea > 0 || floor.outdoorArea > 0),
+    hasSeparateItems: floors.some((floor) => floor.outdoorArea > 0),
   };
 }
 

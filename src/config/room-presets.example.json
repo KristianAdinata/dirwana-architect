@@ -103,5 +103,5 @@
   ],
   "circulationReservePctByFloor": [0.05, 0.05, 0.05],
   "staircaseAreaM2": null,
-  "rules": "Apply the 5% corridor/open-space allowance on each selected floor to indoor preset and custom room area. Add staircase and terrace areas to the priced building area after the corridor allowance. Keep garden/pool/balcony outside the generic construction price. Final site coverage and built area need architectural review."
+  "rules": "Apply the 5% corridor/open-space allowance on each selected floor to indoor preset and custom room area. Add balcony, pool, staircase and terrace areas to the priced building area after the corridor allowance. Keep garden outside the starting construction price. Pool and balcony costs need review in the detailed quotation. Final site coverage and built area need architectural review."
 }

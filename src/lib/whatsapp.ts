@@ -63,7 +63,7 @@ export function buildWhatsAppMessage({ lead, locale, estimate, otherBuildingType
         const count = counts[room.key] ?? 0;
         if (count > 0) {
           const area = estimate.presetAreas?.[index]?.[room.key] ?? count * room.area;
-          lines.push(`- ${count} × ${id ? room.labelID : room.labelEN}: ${formatArea(area, locale)}${room.pricingClass !== "indoor" ? ` (${id ? "estimasi terpisah" : "separate estimate"})` : ""}`);
+          lines.push(`- ${count} × ${id ? room.labelID : room.labelEN}: ${formatArea(area, locale)}${room.pricingClass === "outdoor" ? ` (${id ? "estimasi terpisah" : "separate estimate"})` : ""}`);
         }
       });
       const extras = estimate.extraAreas?.[index];
