@@ -304,8 +304,6 @@ p { line-height:1.7; }
 .summary-area-list strong,.summary-prices strong { flex-shrink:0; font-weight:700; text-align:right; }
 .summary-area-list .total { padding-top:9px; color:var(--charcoal); }
 .summary-area-list .total strong { font-family:var(--font-display); font-size:21px; font-weight:400; }
-.separate-area-list { margin-top:19px; padding-top:18px; border-top:1px solid #cac8bf; }
-.separate-area-list p { margin:3px 0 0; color:var(--muted); font-size:11px; }
 .summary-prices { display:grid; gap:20px; padding:24px 0; }
 .summary-prices .featured-price { display:grid; gap:4px; padding:17px; background:var(--charcoal); color:#fff; }
 .summary-prices .featured-price span { color:#d9ddd3; }

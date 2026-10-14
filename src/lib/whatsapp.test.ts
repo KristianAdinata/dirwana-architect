@@ -32,7 +32,7 @@ describe("WhatsApp consultation", () => {
     const message = buildWhatsAppMessage({ lead, locale: "en", estimate: {
       buildingType: "villa", landLength: 10, landWidth: 20, floorCount: 2, floors: [{ bedroom: 1 }],
     } });
-    expect(message).toContain("Floor 2 — 0 m² estimated indoor rooms");
+    expect(message).toContain("Floor 2 — 0 m² estimated building area");
     expect(message).toContain("1 × Bedroom");
     expect(message).not.toMatch(/Rp|IDR|price|cost|discount|\d[.,]000[.,]000/i);
   });
@@ -44,9 +44,11 @@ describe("WhatsApp consultation", () => {
     const message = buildWhatsAppMessage(input);
     expect(message).toContain("Ruang hobi: 14 m²");
     expect(message).toContain("Koridor & ruang sisa: 5% × 26 m² = 1,3 m²");
-    expect(message).toContain("Lantai 1 — 27,3 m² perkiraan ruang indoor");
-    expect(message).toContain("Area Tangga: 9 m² (estimasi terpisah)");
-    expect(message).toContain("Teras: 12 m² (estimasi terpisah)");
+    expect(message).toContain("Lantai 1 — 48,3 m² perkiraan luas bangunan");
+    expect(message).toContain("Area Tangga: 9 m²");
+    expect(message).toContain("Teras: 12 m²");
+    expect(message).toContain("Total perkiraan luas bangunan: 48,3 m²");
+    expect(message).not.toContain("Area Tangga: 9 m² (estimasi terpisah)");
     expect(message).not.toMatch(/\bRp\.?\s*\d|\bIDR\b|biaya|tarif|\d[.,]000[.,]000/i);
     expect(buildWhatsAppUrl(input, "admin1")).toMatch(/^https:\/\/wa\.me\/6281237489756\?text=/);
     expect(buildWhatsAppUrl(input, "admin2")).toMatch(/^https:\/\/wa\.me\/6285961509075\?text=/);

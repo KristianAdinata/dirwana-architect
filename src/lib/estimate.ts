@@ -55,27 +55,30 @@ export function calculateEstimate(input: EstimatorInput) {
     const circulationPct = circulationReservePctByFloor[index];
     const circulationArea = roundArea(baseIndoorArea * circulationPct);
     const indoorArea = roundArea(baseIndoorArea + circulationArea);
-    return { baseIndoorArea, circulationPct, circulationArea, indoorArea, outdoorArea: areaOf("outdoor"), specialArea: areaOf("special") + extras.staircaseArea + extras.terraceArea, customRoomArea, staircaseArea: extras.staircaseArea, terraceArea: extras.terraceArea };
+    const buildingArea = roundArea(indoorArea + extras.staircaseArea + extras.terraceArea);
+    return { baseIndoorArea, circulationPct, circulationArea, indoorArea, buildingArea, outdoorArea: areaOf("outdoor"), specialArea: areaOf("special"), customRoomArea, staircaseArea: extras.staircaseArea, terraceArea: extras.terraceArea };
   });
   const totalIndoorArea = roundArea(floors.reduce((sum, floor) => sum + floor.indoorArea, 0));
+  const totalBuildingArea = roundArea(floors.reduce((sum, floor) => sum + floor.buildingArea, 0));
   const landArea = input.landLength * input.landWidth;
   const rate = pricing.constructionStartingRatesPerM2[input.buildingType][String(input.floorCount) as "1" | "2" | "3"];
-  const regularDesignCost = totalIndoorArea * pricing.designRatePerM2;
+  const regularDesignCost = totalBuildingArea * pricing.designRatePerM2;
   return {
     floors,
     landArea,
     totalIndoorArea,
+    totalBuildingArea,
     totalBaseIndoorArea: roundArea(floors.reduce((sum, floor) => sum + floor.baseIndoorArea, 0)),
     totalCirculationArea: roundArea(floors.reduce((sum, floor) => sum + floor.circulationArea, 0)),
     totalCustomRoomArea: roundArea(floors.reduce((sum, floor) => sum + floor.customRoomArea, 0)),
     totalStaircaseArea: floors.reduce((sum, floor) => sum + floor.staircaseArea, 0),
     totalTerraceArea: floors.reduce((sum, floor) => sum + floor.terraceArea, 0),
     constructionRate: rate,
-    constructionCost: totalIndoorArea * rate,
+    constructionCost: totalBuildingArea * rate,
     designRate: pricing.designRatePerM2,
     regularDesignCost,
     conditionalDesignCost: regularDesignCost * (1 - pricing.designDiscountIfConstructionWithDirwana),
-    exceedsLand: floors[0].indoorArea + floors[0].outdoorArea > landArea,
+    exceedsLand: floors[0].buildingArea + floors[0].outdoorArea > landArea,
     hasSeparateItems: floors.some((floor) => floor.specialArea > 0 || floor.outdoorArea > 0),
   };
 }

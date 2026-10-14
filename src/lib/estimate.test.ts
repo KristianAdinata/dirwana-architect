@@ -52,7 +52,7 @@ describe("construction tier uses total floor count and calculated indoor area", 
     expect(result.regularDesignCost).toBe(4_830_000);
     expect(result.conditionalDesignCost).toBe(2_415_000);
   });
-  it("prices custom indoor rooms while keeping stairs and terraces separate", () => {
+  it("prices custom rooms, stairs and terraces at the selected building rate", () => {
     const input = base("rumah_tinggal", 1, [{ bedroom: 1 }]);
     const original = calculateEstimate(input);
     const customOnly = calculateEstimate({ ...input, extraAreas: [{ customRooms: [{ name: "Ruang hobi", area: 14 }], staircaseArea: 0, terraceArea: 0 }] });
@@ -63,16 +63,18 @@ describe("construction tier uses total floor count and calculated indoor area", 
     expect(withExtras.floors[0].baseIndoorArea).toBe(26);
     expect(withExtras.floors[0].circulationArea).toBe(1.3);
     expect(withExtras.totalIndoorArea).toBe(27.3);
-    expect(withExtras.constructionCost).toBe(150_150_000);
-    expect(withExtras.regularDesignCost).toBe(2_730_000);
-    expect(withExtras.conditionalDesignCost).toBe(1_365_000);
-    expect(withExtras.constructionCost).toBe(customOnly.constructionCost);
-    expect(withExtras.regularDesignCost).toBe(customOnly.regularDesignCost);
+    expect(withExtras.floors[0].buildingArea).toBe(48.3);
+    expect(withExtras.totalBuildingArea).toBe(48.3);
+    expect(withExtras.constructionCost).toBeCloseTo(265_650_000, 0);
+    expect(withExtras.regularDesignCost).toBeCloseTo(4_830_000, 0);
+    expect(withExtras.conditionalDesignCost).toBeCloseTo(2_415_000, 0);
+    expect(withExtras.constructionCost).toBeGreaterThan(customOnly.constructionCost);
+    expect(withExtras.regularDesignCost).toBeGreaterThan(customOnly.regularDesignCost);
     expect(withExtras.exceedsLand).toBe(customOnly.exceedsLand);
     expect(withExtras.totalCustomRoomArea).toBe(14);
     expect(withExtras.totalStaircaseArea).toBe(9);
     expect(withExtras.totalTerraceArea).toBe(12);
-    expect(withExtras.hasSeparateItems).toBe(true);
+    expect(withExtras.hasSeparateItems).toBe(false);
   });
   it("rejects invalid dimensions and quantities", () => {
     expect(() => calculateEstimate({ ...base("villa", 1, [{}]), landWidth: 0 })).toThrow();
